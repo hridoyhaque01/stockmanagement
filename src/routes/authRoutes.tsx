@@ -1,19 +1,31 @@
-import { authRoutes } from "../constants";
-import { Route } from "../types";
+import { authRoutes } from "../common/constants";
+import { Route } from "../common/types";
+import Layout from "../pages/layout";
+import PrivateRouter from "./PrivateRouter";
 
 const { login, register, home } = authRoutes;
 
 export const authRoute: Route[] = [
   {
-    path: home.path,
-    element: <home.element />,
-  },
-  {
-    path: login.path,
-    element: <login.element />,
-  },
-  {
-    path: register.path,
-    element: <register.element />,
+    path: "/",
+    element: (
+      <PrivateRouter>
+        <Layout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: home.path,
+        element: <home.element />,
+      },
+      {
+        path: login.path,
+        element: <login.element />,
+      },
+      {
+        path: register.path,
+        element: <register.element />,
+      },
+    ],
   },
 ];
