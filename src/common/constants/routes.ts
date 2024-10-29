@@ -6,7 +6,7 @@ const adminRoutes: RoutePathConfig = {
     name: "Dashboard",
     path: "/dashboard",
     activePath: "dashboard",
-    element: React.lazy(() => import("../pages/admin")), 
+    element: React.lazy(() => import("../../pages/admin")),
   },
 };
 
@@ -15,19 +15,19 @@ const authRoutes: RoutePathConfig = {
     name: "Home",
     path: "/",
     activePath: "home",
-    element: React.lazy(() => import("../pages/auth")),
+    element: React.lazy(() => import("../../pages/auth")),
   },
   login: {
     name: "Login",
     path: "/auth/login",
     activePath: "login",
-    element: React.lazy(() => import("../pages/auth/login")),
+    element: React.lazy(() => import("../../pages/auth/login")),
   },
   register: {
     name: "Register",
     path: "/auth/register",
     activePath: "register",
-    element: React.lazy(() => import("../pages/auth/register")),
+    element: React.lazy(() => import("../../pages/auth/register")),
   },
 };
 

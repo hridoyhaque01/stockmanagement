@@ -4,12 +4,13 @@ type RoutePath = {
   name: string;
   path: string;
   activePath: string;
-  element: LazyExoticComponent<React.ComponentType<any>>; // This is correct for lazy-loaded components
+  element: LazyExoticComponent<React.ComponentType<any>>; 
 };
 
 type Route = {
   path: string;
-  element: React.ReactNode; // Change this to ReactNode to accept both components and lazy-loaded components
+  element: React.ReactNode;
+  children?: Route[];
 };
 
 type RoutePathConfig = {
