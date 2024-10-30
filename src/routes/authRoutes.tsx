@@ -1,6 +1,6 @@
-import { authRoutes } from "../common/constants";
+import { authRoutes } from "../common/constants/routes";
 import { Route } from "../common/types";
-import Layout from "../pages/layout";
+import Layout from "../components/layout";
 import PrivateRouter from "./PrivateRouter";
 
 const { login, register, home } = authRoutes;
@@ -16,15 +16,15 @@ export const authRoute: Route[] = [
     children: [
       {
         path: home.path,
-        element: <home.element />,
+        element: home.element,
       },
       {
         path: login.path,
-        element: <login.element />,
+        element: login.element,
       },
       {
         path: register.path,
-        element: <register.element />,
+        element: login.element,
       },
     ],
   },

@@ -1,13 +1,13 @@
-import { adminRoutes } from "../common/constants";
+import { adminRoutes } from "../common/constants/routes";
 import { Route } from "../common/types";
-import Layout from "../pages/layout";
+import Layout from "../components/layout";
 import PrivateRouter from "./PrivateRouter";
 
 const { dashboard } = adminRoutes;
 
 export const adminRoute: Route[] = [
   {
-    path: "/",
+    path: "/admin",
     element: (
       <PrivateRouter>
         <Layout />
@@ -16,7 +16,7 @@ export const adminRoute: Route[] = [
     children: [
       {
         path: dashboard.path,
-        element: <dashboard.element />,
+        element: dashboard.element,
       },
     ],
   },

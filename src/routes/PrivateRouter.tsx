@@ -11,6 +11,7 @@ function PrivateRouter({ children }: ChildrenProps) {
   const isAuthRoute = location?.pathname?.includes("auth");
   const isAdminRoute = location?.pathname?.includes("admin");
   const token = auth?.token;
+  console.log("hello");
   if (!token && isAdminRoute) {
     return <Navigate to="/" state={{ from: location }} replace />;
   } else if (token && isAuthRoute) {

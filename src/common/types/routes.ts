@@ -1,10 +1,10 @@
-import { LazyExoticComponent } from "react";
+import { ReactNode } from "react";
 
 type RoutePath = {
   name: string;
   path: string;
   activePath: string;
-  element: LazyExoticComponent<React.ComponentType<any>>; 
+  element: ReactNode;
 };
 
 type Route = {
