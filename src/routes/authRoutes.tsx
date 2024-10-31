@@ -1,6 +1,6 @@
-import { authRoutes } from "../common/constants/routes";
-import { Route } from "../common/types";
-import Layout from "../components/layout";
+import { authRoutes } from "@/common/constants";
+import { Route } from "@/common/types";
+import Layout from "@/components/layout";
 import PrivateRouter from "./PrivateRouter";
 
 const { login, register, home } = authRoutes;

@@ -1,7 +1,7 @@
-import Dashboard from "../../pages/admin";
-import Home from "../../pages/auth";
-import Login from "../../pages/auth/login";
-import Register from "../../pages/auth/register";
+import Dashboard from "@/pages/admin";
+import Home from "@/pages/auth";
+import Login from "@/pages/auth/login";
+import Register from "@/pages/auth/register";
 import { RoutePathConfig } from "../types";
 
 const adminRoutes: RoutePathConfig = {

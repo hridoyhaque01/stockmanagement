@@ -1,6 +1,6 @@
-import { adminRoutes } from "../common/constants/routes";
-import { Route } from "../common/types";
-import Layout from "../components/layout";
+import { adminRoutes } from "@/common/constants";
+import { Route } from "@/common/types";
+import Layout from "@/components/layout";
 import PrivateRouter from "./PrivateRouter";
 
 const { dashboard } = adminRoutes;

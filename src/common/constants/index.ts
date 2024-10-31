@@ -1,2 +1,3 @@
-export * from "./routes.tsz";
+export * from "./images";
+export * from "./routes";
 export * from "./svg";

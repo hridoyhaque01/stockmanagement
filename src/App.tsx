@@ -3,7 +3,7 @@ import { routes } from "./routes/router";
 
 function App() {
   return (
-    <div className="font-tiro">
+    <div className="">
       <RouterProvider router={routes} />
     </div>
   );
