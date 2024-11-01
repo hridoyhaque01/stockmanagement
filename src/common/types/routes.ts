@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 type RoutePath = {
   name: string;
   path: string;
+  routePath?: string;
   activePath: string;
   element: ReactNode;
 };

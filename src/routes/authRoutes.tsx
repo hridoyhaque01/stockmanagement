@@ -3,7 +3,7 @@ import { Route } from "@/common/types";
 import Layout from "@/components/layout";
 import PrivateRouter from "./PrivateRouter";
 
-const { login, register, home } = authRoutes;
+const { login, register, home, otpVerification, forgotPassword } = authRoutes;
 
 export const authRoute: Route[] = [
   {
@@ -24,7 +24,15 @@ export const authRoute: Route[] = [
       },
       {
         path: register.path,
-        element: login.element,
+        element: register.element,
+      },
+      {
+        path: forgotPassword.path,
+        element: forgotPassword.element,
+      },
+      {
+        path: otpVerification.path,
+        element: otpVerification.element,
       },
     ],
   },
