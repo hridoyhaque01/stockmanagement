@@ -1,4 +1,5 @@
 import { formattedPhoneNumber } from "@/common/constants";
+import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 
 function NumberInput({
@@ -9,6 +10,7 @@ function NumberInput({
   setter,
   onChange,
   label = "",
+  wrapper = "",
   labelClass = "",
   type = "number",
   isLoading = false,
@@ -23,6 +25,7 @@ function NumberInput({
   setter?: (value: string) => string;
   onChange?: (event: React.ChangeEvent, name: string, value: string) => void;
   label?: string;
+  wrapper?: string;
   labelClass?: string;
   type?: string;
   isLoading?: boolean;
@@ -72,9 +75,9 @@ function NumberInput({
   }, [defaultValue]);
 
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className={cn("flex flex-col gap-2 h-full", wrapper)}>
       {label && (
-        <label className={`label ${labelClass}`} htmlFor="">
+        <label className={cn("label", labelClass)} htmlFor="">
           {label}
         </label>
       )}
@@ -83,7 +86,7 @@ function NumberInput({
           className={`relative h-[54px] w-full rounded-lg bg-white-200 animate-pulse`}
         ></div>
       ) : (
-        <div className={`h-full relative ${inputWrapper}`}>
+        <div className={cn("h-full relative w-full", inputWrapper)}>
           <input
             type="text"
             className={`input h-full ${classes}`}

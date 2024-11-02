@@ -1,4 +1,5 @@
 import React from "react";
+import { RoutePathConfig } from "../types";
 
 const checkEmailValidity = (email: string) => {
   if (email) {
@@ -34,4 +35,11 @@ const formattedPhoneNumber = (event: React.ChangeEvent) => {
   return formattedNumber;
 };
 
-export { checkEmailValidity, formattedPhoneNumber, handleNumber };
+function getPageTitle(pathname: string, routes: RoutePathConfig) {
+  const route = Object?.values(routes)?.find(
+    (route) => route?.path === pathname
+  );
+  return route ? route?.name : null;
+}
+
+export { checkEmailValidity, formattedPhoneNumber, getPageTitle, handleNumber };

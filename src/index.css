@@ -14,7 +14,7 @@
   }
 
   .input {
-    @apply px-3 py-3.5 bg-white w-full text-sm placeholder:text-black-400 text-black-900 border border-neutral-300 outline-none rounded-lg read-only:cursor-default focus:outline-none focus:border-neutral-300 focus:shadow-none focus:ring-0 focus:ring-transparent disabled:bg-white-100 disabled:text-black-600 read-only:text-black-600 read-only:bg-white-100;
+    @apply px-3 py-3.5 bg-white w-full text-sm placeholder:text-black-400 text-black-900 border border-neutral-300 outline-none rounded-lg read-only:cursor-default focus:outline-none focus:border-neutral-300 focus:shadow-none focus:ring-0 focus:ring-transparent disabled:bg-neutral-100 disabled:text-black-600 read-only:text-black-600 read-only:bg-neutral-100;
   }
 
   .input-none {
@@ -27,7 +27,5 @@
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-   
   }
-
 }

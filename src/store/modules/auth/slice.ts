@@ -10,7 +10,6 @@ const slice = createSlice({
   initialState,
   reducers: {
     saveAuthData: (state, action) => {
-      console.log("payload", action?.payload);
       state.auth = { ...state.auth, ...action?.payload };
       localStorage.setItem("auth_details", JSON.stringify(state.auth));
     },

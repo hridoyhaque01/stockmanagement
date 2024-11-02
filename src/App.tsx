@@ -1,10 +1,14 @@
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster";
+import useAuthCheck from "./hooks/useAuthCheck";
 import { routes } from "./routes/router";
 
 function App() {
-  return (
-    <div className="">
+  const isChecking = useAuthCheck();
+  return !isChecking ? (
+    <div>Loading...</div>
+  ) : (
+    <div className="font-poppins">
       <RouterProvider router={routes} />
       <Toaster />
     </div>

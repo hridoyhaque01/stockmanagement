@@ -3,14 +3,13 @@ import { ArrowLeft } from "@/common/constants/svgs";
 import Input from "@/components/shared/Input";
 import Password from "@/components/shared/Password";
 import RequestLoader from "@/components/shared/RequestLoader";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/hooks/use-toast";
+import useToastify from "@/hooks/useToastify";
 import { useLoginMutation } from "@/store/modules/auth/api";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const { toast } = useToast();
+  const { errorNotify, successNotify } = useToastify();
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
 
@@ -25,25 +24,11 @@ function Login() {
     login(formData)
       .unwrap()
       .then((res) => {
-        toast({
-          title: res?.message,
-          variant: "success",
-        });
+        successNotify(res?.message);
         navigate(adminRoutes.dashboard.path);
       })
       .catch((error) => {
-        toast({
-          title: error?.data?.message,
-          variant: "destructive",
-          action: (
-            <ToastAction
-              altText="Try again"
-              onClick={() => handleSubmit(event)}
-            >
-              Try again
-            </ToastAction>
-          ),
-        });
+        errorNotify(error?.data?.message, () => handleSubmit(event));
       });
   };
   return (

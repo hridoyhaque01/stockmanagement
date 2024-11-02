@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React, { forwardRef } from "react";
 
 const Input = forwardRef<
@@ -27,9 +28,9 @@ const Input = forwardRef<
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     return (
-      <div className={`flex flex-col gap-2 ${wrapper}`}>
+      <div className={cn("flex flex-col gap-2", wrapper)}>
         {label && (
-          <label className={`label ${labelClass}`} htmlFor="">
+          <label className={cn("label", labelClass)} htmlFor="">
             {label}
           </label>
         )}
