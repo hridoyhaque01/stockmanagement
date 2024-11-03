@@ -1,4 +1,3 @@
-import { adminRoutes } from "@/common/constants";
 import {
   Table,
   TableBody,
@@ -9,15 +8,11 @@ import {
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
 import { Supplies } from "@/store/modules/supplies/types";
-import { PenBoxIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { TrashIcon } from "lucide-react";
 
 function SuppliesTable({ data = [] }: { data: Supplies[] }) {
-  const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
-  const handleUpdateNavigation = (item: Supplies) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
-  };
+
   return (
     <>
       <Table className="">
@@ -49,12 +44,8 @@ function SuppliesTable({ data = [] }: { data: Supplies[] }) {
               <TableCell>৳ {item?.dueAmount}</TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
-                  >
-                    <PenBoxIcon className="w-5 h-5" />
+                  <button type="button" className="text-blue-500">
+                    <TrashIcon className="w-5 h-5 text-red-100" />
                   </button>
                 </div>
               </TableCell>

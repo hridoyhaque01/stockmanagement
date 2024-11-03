@@ -1,19 +1,30 @@
 import { adminRoutes } from "@/common/constants";
+import { supplierAddValidation } from "@/common/constants/validation";
+import { SupplierAddForm } from "@/common/types";
 import Input from "@/components/shared/Input";
 import { Button } from "@/components/ui/button";
+import useToastify from "@/hooks/useToastify";
 import { useNavigate } from "react-router-dom";
 
 function AddSupplier() {
   const navigate = useNavigate();
+  const { errorNotify } = useToastify();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const productId = form.productId.value;
-    const productName = form.productName.value;
-    const data = {
-      productId,
-      productName,
+    const supplierName = form.supplierName.value;
+    const supplierPhone = form.supplierPhone.value;
+    const supplierEmail = form.supplierEmail.value;
+    const supplierAddress = form.supplierAddress.value;
+    const data: SupplierAddForm = {
+      supplierName,
+      supplierPhone,
+      supplierEmail,
+      supplierAddress,
     };
+    const { error } = supplierAddValidation(data);
+    if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
     console.log(data);
@@ -23,7 +34,7 @@ function AddSupplier() {
       <div className="w-full bg-white p-6 rounded-2xl">
         <div className="p-3 bg-green-500 rounded-lg">
           <h2 className="text-base text-center sm:text-left font-medium text-white">
-            Add Product
+            Add Supplier
           </h2>
         </div>
         <form
@@ -34,19 +45,34 @@ function AddSupplier() {
           <div className="flex flex-col gap-4 sm:gap-6">
             <Input
               wrapper="sm:flex-row sm:items-center sm:gap-4"
-              label="Product Id : "
-              placeholder="Enter product id"
-              name="productId"
+              label="Name : "
+              placeholder="Enter supplier name"
+              name="supplierName"
               labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
               required
             />
             <Input
               wrapper="sm:flex-row sm:items-center sm:gap-4"
-              label="Product Name : "
-              placeholder="Enter product name"
-              name="productName"
+              label="Phone : "
+              placeholder="Enter supplier phone"
+              name="supplierPhone"
               labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
               required
+            />
+            <Input
+              wrapper="sm:flex-row sm:items-center sm:gap-4"
+              label="Email : "
+              placeholder="Enter supplier email"
+              name="supplierEmail"
+              labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
+            />
+
+            <Input
+              wrapper="sm:flex-row sm:items-center sm:gap-4"
+              label="Address : "
+              placeholder="Enter supplier address"
+              name="supplierAddress"
+              labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
             />
           </div>
           <div className="flex items-center justify-end mt-10 gap-4">
@@ -54,7 +80,7 @@ function AddSupplier() {
               variant="cancel"
               size="lg"
               type="button"
-              onClick={() => navigate(adminRoutes.products.path)}
+              onClick={() => navigate(adminRoutes.suppliers.path)}
             >
               Cancel
             </Button>

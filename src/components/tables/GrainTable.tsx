@@ -9,14 +9,15 @@ import {
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
 import { Grain } from "@/store/modules/grains/types";
-import { PenBoxIcon } from "lucide-react";
+import { ClipboardList, TrashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function GrainTable({ data = [] }: { data: Grain[] }) {
-  const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
-  const handleUpdateNavigation = (item: Grain) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
+  const navigate = useNavigate();
+
+  const handleHistoryNavigation = (item: Grain) => {
+    navigate(`${adminRoutes.grainHistory.routePath}/${item?.id}/grain-history`);
   };
   return (
     <>
@@ -44,9 +45,12 @@ function GrainTable({ data = [] }: { data: Grain[] }) {
                   <button
                     type="button"
                     className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
+                    onClick={() => handleHistoryNavigation(item)}
                   >
-                    <PenBoxIcon className="w-5 h-5" />
+                    <ClipboardList className="w-5 h-5 " />
+                  </button>
+                  <button type="button" className="text-red-100">
+                    <TrashIcon className="w-5 h-5 " />
                   </button>
                 </div>
               </TableCell>

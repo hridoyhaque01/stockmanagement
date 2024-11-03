@@ -23,7 +23,7 @@ function AddProduct() {
       <div className="w-full bg-white p-6 rounded-2xl">
         <div className="p-3 bg-green-500 rounded-lg">
           <h2 className="text-base text-center sm:text-left font-medium text-white">
-            Add Product
+            Update Product
           </h2>
         </div>
         <form

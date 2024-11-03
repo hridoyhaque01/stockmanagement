@@ -1,4 +1,3 @@
-import { adminRoutes } from "@/common/constants";
 import {
   Table,
   TableBody,
@@ -9,15 +8,11 @@ import {
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
 import { Sale } from "@/store/modules/sales/types";
-import { PenBoxIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { PrinterIcon, TrashIcon } from "lucide-react";
 
 function SaleTable({ data = [] }: { data: Sale[] }) {
-  const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
-  const handleUpdateNavigation = (item: Sale) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
-  };
+
   return (
     <>
       <Table className="">
@@ -40,17 +35,16 @@ function SaleTable({ data = [] }: { data: Sale[] }) {
               <TableCell>{item?.customer.customerName}</TableCell>
               <TableCell>{item?.customer.customerPhone}</TableCell>
               <TableCell>{item?.totalQuantity}</TableCell>
-              <TableCell>{item?.totalPrice}</TableCell>
-              <TableCell>{item?.totalPaid}</TableCell>
+              <TableCell>৳ {item?.totalPrice}</TableCell>
+              <TableCell>৳ {item?.totalPaid}</TableCell>
               <TableCell>৳ {item?.totalDue}</TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
-                  >
-                    <PenBoxIcon className="w-5 h-5" />
+                  <button type="button" className="text-blue-500">
+                    <PrinterIcon className="w-5 h-5" />
+                  </button>
+                  <button type="button" className="text-red-100">
+                    <TrashIcon className="w-5 h-5" />
                   </button>
                 </div>
               </TableCell>

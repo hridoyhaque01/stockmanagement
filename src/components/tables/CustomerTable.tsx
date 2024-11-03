@@ -16,7 +16,7 @@ function CustomersTable({ data = [] }: { data: Customer[] }) {
   const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
   const handleUpdateNavigation = (item: Customer) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
+    navigate(adminRoutes.updateCustomer.path, { state: item });
   };
   return (
     <>

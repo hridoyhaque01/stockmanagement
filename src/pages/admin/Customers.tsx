@@ -10,7 +10,7 @@ function Customers() {
   return (
     <div className="h-full p-6 flex flex-col overflow-auto">
       <PageNavigate
-        title="Sustomers"
+        title="Customers"
         quantity={customers?.length}
         path={adminRoutes.addCustomer.path}
         pathname="Add Customer"

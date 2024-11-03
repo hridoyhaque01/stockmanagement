@@ -24,7 +24,9 @@ function useToastify() {
     toast({
       title: message,
       variant: "destructive",
-      action: (
+      action: !action ? (
+        action
+      ) : (
         <ToastAction altText="Try again" onClick={action}>
           Try again
         </ToastAction>

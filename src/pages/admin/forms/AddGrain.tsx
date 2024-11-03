@@ -1,60 +1,130 @@
 import { adminRoutes } from "@/common/constants";
+import { grainAddValidation } from "@/common/constants/validation";
+import { GrainAddForm } from "@/common/types";
+import CategorySelect from "@/components/shared/CategorySelect";
+import DatePicker from "@/components/shared/DatePicker";
 import Input from "@/components/shared/Input";
+import NumberInput from "@/components/shared/NumberInput";
+import ProductSearch from "@/components/shared/ProductSearch";
 import { Button } from "@/components/ui/button";
+import useToastify from "@/hooks/useToastify";
+import { Product } from "@/store/modules/products/types";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddGrain() {
   const navigate = useNavigate();
+  const [date, setDate] = useState<Date>();
+  const [product, setProduct] = useState<Product>();
+  const { errorNotify } = useToastify();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const productId = form.productId.value;
-    const productName = form.productName.value;
-    const data = {
-      productId,
-      productName,
+    const productQuantity = Number(form.productQuantity.value);
+    const grainQuantity = Number(form.grainQuantity.value);
+    const price = Number(form.price.value);
+    const productCategory = form.productCategory.value;
+    const grainCategory = form.grainCategory.value;
+
+    const data: GrainAddForm = {
+      productId: product?.id,
+      productQuantity,
+      grainQuantity,
+      price,
+      type: "proccess",
+      productCategory,
+      grainCategory,
+      insertDate: date,
     };
+
+    const { error } = grainAddValidation(data);
+    if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
     console.log(data);
   };
+
   return (
     <div className="p-6">
       <div className="w-full bg-white p-6 rounded-2xl">
         <div className="p-3 bg-green-500 rounded-lg">
           <h2 className="text-base text-center sm:text-left font-medium text-white">
-            Add Product
+            Add Grain
           </h2>
         </div>
         <form
           action="#"
           onSubmit={handleSubmit}
-          className="mt-6 w-full max-w-[520px] mx-auto"
+          className="mt-6 w-full  mx-auto"
         >
-          <div className="flex flex-col gap-4 sm:gap-6">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="w-full flex flex-col gap-2">
+              <span className="label whitespace-nowrap">Product Id :</span>
+              <ProductSearch product={product} setProduct={setProduct} />
+            </div>
             <Input
-              wrapper="sm:flex-row sm:items-center sm:gap-4"
-              label="Product Id : "
-              placeholder="Enter product id"
-              name="productId"
-              labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
-              required
-            />
-            <Input
-              wrapper="sm:flex-row sm:items-center sm:gap-4"
               label="Product Name : "
-              placeholder="Enter product name"
+              placeholder="Product Name"
               name="productName"
-              labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
+              required
+              readOnly
+              defaultValue={product?.productName}
+            />
+            <Input
+              label="Avarage Price : "
+              placeholder="Avarage Price"
+              name="productName"
+              required
+              readOnly
+              defaultValue={product?.avaragePrice}
+            />
+            <Input
+              label="Quantity Left : "
+              placeholder="Quantity Left"
+              name="productName"
+              required
+              readOnly
+              defaultValue={product?.quantity}
+            />
+
+            <NumberInput
+              label="Product Quantity : "
+              placeholder="Enter product quantity"
+              name="productQuantity"
               required
             />
+            <CategorySelect
+              label="Product Category"
+              defaultValue="kg"
+              name="productCategory"
+            />
+
+            <NumberInput
+              label="Grain Quantity : "
+              placeholder="Enter grain quantity"
+              name="grainQuantity"
+              required
+            />
+            <CategorySelect
+              label="Grain Category"
+              defaultValue="kg"
+              name="grainCategory"
+            />
+            <NumberInput
+              label="Price : "
+              placeholder="Enter grain price"
+              name="price"
+              required
+            />
+            <DatePicker label="Date : " date={date} setDate={setDate} />
           </div>
           <div className="flex items-center justify-end mt-10 gap-4">
             <Button
               variant="cancel"
               size="lg"
               type="button"
-              onClick={() => navigate(adminRoutes.products.path)}
+              onClick={() => navigate(adminRoutes.grains.path)}
             >
               Cancel
             </Button>

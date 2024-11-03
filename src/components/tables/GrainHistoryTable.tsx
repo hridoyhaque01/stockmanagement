@@ -1,4 +1,3 @@
-import { adminRoutes } from "@/common/constants";
 import {
   Table,
   TableBody,
@@ -8,45 +7,68 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
-import { Product } from "@/store/modules/products/types";
-import { PenBoxIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { GrainHistory } from "@/store/modules/grains/types";
+import { TrashIcon } from "lucide-react";
 
-function GrainHistoryTable({ data = [] }: { data: Product[] }) {
-  const navigate = useNavigate();
+function GrainHistoryTable({ data = [] }: { data: GrainHistory[] }) {
   const { pagination, currentRows } = usePagination({ data: data });
-  const handleUpdateNavigation = (item: Product) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
-  };
   return (
     <>
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
-            <TableHead className="w-[150px] text-white">Product Id</TableHead>
-            <TableHead className="text-white">Product Name</TableHead>
-            <TableHead className="text-white">Quantity</TableHead>
-            <TableHead className="text-white">Total Price</TableHead>
-            <TableHead className=" text-white">Avarage Price</TableHead>
+            <TableHead className="w-[150px] truncate text-white">
+              Product Id
+            </TableHead>
+            <TableHead className="text-white truncate">Product Name</TableHead>
+            <TableHead className="text-white truncate">
+              Product Quantity
+            </TableHead>
+            <TableHead className="text-white truncate">
+              Product Category
+            </TableHead>
+            <TableHead className="text-white truncate">
+              Grain Quantity
+            </TableHead>
+            <TableHead className="text-white truncate">
+              Grain Category
+            </TableHead>
+            <TableHead className="text-white truncate">Grain Left</TableHead>
+            <TableHead className="text-white truncate">Price</TableHead>
             <TableHead className="text-center text-white">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {currentRows?.map((item) => (
             <TableRow key={item?.id}>
-              <TableCell className="font-medium">{item?.productId}</TableCell>
-              <TableCell>{item?.productName}</TableCell>
-              <TableCell>{item?.quantity}</TableCell>
-              <TableCell>৳ {item?.totalPrice}</TableCell>
-              <TableCell>৳ {item?.avaragePrice}</TableCell>
-              <TableCell className="text-center">
+              <TableCell className="font-medium whitespace-nowrap">
+                {item?.product.productId}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.product?.productName}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.productQuantity}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.productCategory}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.quantity}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.grainCategory}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                {item?.quantityLeft}
+              </TableCell>
+              <TableCell className="whitespace-nowrap">
+                ৳ {item?.price}
+              </TableCell>
+              <TableCell className="text-center  whitespace-nowrap">
                 <div className="flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
-                  >
-                    <PenBoxIcon className="w-5 h-5" />
+                  <button type="button" className="text-red-100">
+                    <TrashIcon className="w-5 h-5" />
                   </button>
                 </div>
               </TableCell>

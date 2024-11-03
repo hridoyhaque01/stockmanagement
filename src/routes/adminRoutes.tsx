@@ -9,6 +9,7 @@ const {
   products,
   supplies,
   grains,
+  grainHistory,
   suppliers,
   sales,
   customers,
@@ -67,6 +68,10 @@ export const adminRoute: Route[] = [
       {
         path: addGrain.path,
         element: addGrain.element,
+      },
+      {
+        path: grainHistory.path,
+        element: grainHistory.element,
       },
       // sales
       {

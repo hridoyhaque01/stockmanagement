@@ -1,6 +1,7 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import Dashboard from "@/pages/admin";
 import Customers from "@/pages/admin/Customers";
+import AddCustomer from "@/pages/admin/forms/AddCustomer";
 import AddGrain from "@/pages/admin/forms/AddGrain";
 import AddProduct from "@/pages/admin/forms/AddProduct";
 import AddSales from "@/pages/admin/forms/AddSales";
@@ -9,6 +10,7 @@ import AddSupplies from "@/pages/admin/forms/AddSupplies";
 import UpdateCustomer from "@/pages/admin/forms/UpdateCustomer";
 import UpdateProduct from "@/pages/admin/forms/UpdateProduct";
 import UpdateSupplier from "@/pages/admin/forms/UpdateSupplier";
+import GrainHistories from "@/pages/admin/GrainHistories";
 import Grains from "@/pages/admin/Grains";
 import Products from "@/pages/admin/Products";
 import Profile from "@/pages/admin/Profile";
@@ -21,7 +23,6 @@ import Login from "@/pages/auth/login";
 import OtpVerification from "@/pages/auth/otp-verification";
 import Register from "@/pages/auth/register";
 import { RoutePathConfig } from "../types";
-import AddCustomer from "@/pages/admin/forms/AddCustomer";
 
 const registerToken = import.meta.env.VITE_REGISTER_TOKEN;
 
@@ -82,6 +83,13 @@ const adminRoutes: RoutePathConfig = {
     path: "/admin/grains/add-grain",
     activePath: "grains",
     element: <AddGrain />,
+  },
+  grainHistory: {
+    name: "Grain History",
+    path: "/admin/grains/:grainId/grain-history",
+    routePath: "/admin/grains",
+    activePath: "grains",
+    element: <GrainHistories />,
   },
   // sales
   sales: {

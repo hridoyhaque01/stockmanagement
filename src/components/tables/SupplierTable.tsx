@@ -16,7 +16,7 @@ function SupplierTable({ data = [] }: { data: Supplier[] }) {
   const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
   const handleUpdateNavigation = (item: Supplier) => {
-    navigate(adminRoutes.updateProduct.path, { state: item });
+    navigate(adminRoutes.updateSupplier.path, { state: item });
   };
   return (
     <>
@@ -41,9 +41,9 @@ function SupplierTable({ data = [] }: { data: Supplier[] }) {
               <TableCell className="font-medium">
                 {item?.supplierName}
               </TableCell>
-              <TableCell>{item?.supplierEmail}</TableCell>
+              <TableCell>{item?.supplierEmail || "N/A"}</TableCell>
               <TableCell>{item?.supplierPhone}</TableCell>
-              <TableCell>৳ {item?.supplierAddress}</TableCell>
+              <TableCell>{item?.supplierAddress || "N/A"}</TableCell>
               <TableCell>৳ {item?.totalPaid}</TableCell>
               <TableCell>৳ {item?.totalDue}</TableCell>
               <TableCell>৳ {item?.totalBalance}</TableCell>

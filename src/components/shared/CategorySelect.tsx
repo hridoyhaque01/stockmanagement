@@ -19,14 +19,9 @@ function CategorySelect({
   [key: string]: any;
 }) {
   return (
-    <div className={cn("w-full flex items-center gap-2 sm:gap-4", wrapper)}>
+    <div className={cn("w-full flex flex-col gap-2", wrapper)}>
       {label && (
-        <span
-          className={cn(
-            "label whitespace-nowrap sm:min-w-[110px] sm:text-right",
-            labelClass
-          )}
-        >
+        <span className={cn("label whitespace-nowrap", labelClass)}>
           {label}
         </span>
       )}
