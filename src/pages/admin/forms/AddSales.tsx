@@ -127,6 +127,7 @@ function AddSales() {
               <button
                 className="flex items-center gap-2 text-red-100 text-base"
                 type="button"
+                    onClick={() => setOrders([])}
                 onClick={handleModal}
               >
                 <PlusCircleIcon className="w-5 h-5" />
