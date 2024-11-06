@@ -55,13 +55,13 @@ function GrainTable({
                 <ArrowDownUpIcon className="w-5 h-5" />
               </button>
             </TableHead>
-            <TableHead className="w-[150px] text-white  truncate">
+            <TableHead className="w-[150px] text-white  truncate  truncate">
               Product Id
             </TableHead>
-            <TableHead className="text-white  truncate">Product Name</TableHead>
-            <TableHead className="text-white  truncate">Quantity</TableHead>
-            <TableHead className="text-white  truncate">Price</TableHead>
-            <TableHead className="text-center text-white  truncate">
+            <TableHead className="text-white  truncate  truncate">Product Name</TableHead>
+            <TableHead className="text-white  truncate  truncate">Quantity</TableHead>
+            <TableHead className="text-white  truncate  truncate">Price</TableHead>
+            <TableHead className="text-center text-white  truncate  truncate">
               Action
             </TableHead>
           </TableRow>

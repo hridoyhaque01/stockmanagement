@@ -94,24 +94,24 @@ function CustomersTable({
                 <ArrowDownUpIcon className="w-5 h-5" />
               </button>
             </TableHead>
-            <TableHead className="w-[150px] text-white truncate">
+            <TableHead className="w-[150px] text-white truncate truncate">
               Customer Name
             </TableHead>
-            <TableHead className="text-white truncate">
+            <TableHead className="text-white truncate truncate">
               Customer Email
             </TableHead>
-            <TableHead className="text-white truncate">
+            <TableHead className="text-white truncate truncate">
               Customer Phone
             </TableHead>
-            <TableHead className="text-white truncate">
+            <TableHead className="text-white truncate truncate">
               Customer Address
             </TableHead>
-            <TableHead className=" text-white truncate">Total Paid</TableHead>
-            <TableHead className=" text-white truncate">Total Due</TableHead>
-            <TableHead className=" text-white truncate">
+            <TableHead className=" text-white truncate truncate">Total Paid</TableHead>
+            <TableHead className=" text-white truncate truncate">Total Due</TableHead>
+            <TableHead className=" text-white truncate truncate">
               Total Balance
             </TableHead>
-            <TableHead className="text-center text-white truncate">
+            <TableHead className="text-center text-white truncate truncate">
               Action
             </TableHead>
           </TableRow>
