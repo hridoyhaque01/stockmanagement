@@ -1,5 +1,6 @@
 import { adminRoutes, logo } from "@/common/constants";
 import { RootState } from "@/store";
+import { setSidebarShow } from "@/store/modules/common/slice";
 import {
   BadgeDollarSignIcon,
   HandPlatterIcon,
@@ -9,10 +10,11 @@ import {
   UsersRoundIcon,
   WheatIcon,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function AdminSidebar() {
+  const dispatch = useDispatch();
   const { dashboard, products, supplies, grains, sales, suppliers, customers } =
     adminRoutes;
 
@@ -24,11 +26,12 @@ function AdminSidebar() {
       <div
         className={`w-[256px] py-6 shrink-0 h-full flex flex-col gap-10 fixed lg:relative top-0 left-0 ${
           showSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }  duration-300 z-[99]`}
+        }  duration-300 z-[999] bg-white`}
       >
         <Link
           to="/"
           className="w-full max-w-[220px] mx-auto sticky px-4 top-0 shrink-0"
+          onClick={() => dispatch(setSidebarShow(false))}
         >
           <img src={logo} alt="" />
         </Link>
@@ -42,6 +45,7 @@ function AdminSidebar() {
                   ? "text-white bg-green-500"
                   : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <LayoutDashboardIcon />
               <span>Dashboard</span>
@@ -53,6 +57,7 @@ function AdminSidebar() {
                   ? "text-white bg-green-500"
                   : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <HandPlatterIcon />
               <span>Products</span>
@@ -64,6 +69,7 @@ function AdminSidebar() {
                   ? "text-white bg-green-500"
                   : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <StoreIcon />
               <span>Supplies</span>
@@ -73,6 +79,7 @@ function AdminSidebar() {
               className={`flex items-center p-4 gap-4 text-base font-medium hover:bg-green-500 hover:text-white ${
                 activePath == grains.activePath ? "text-white bg-green-500" : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <WheatIcon />
               <span>Grains</span>
@@ -82,6 +89,7 @@ function AdminSidebar() {
               className={`flex items-center p-4 gap-4 text-base font-medium hover:bg-green-500 hover:text-white ${
                 activePath == sales.activePath ? "text-white bg-green-500" : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <BadgeDollarSignIcon />
               <span>Sales</span>
@@ -93,6 +101,7 @@ function AdminSidebar() {
                   ? "text-white bg-green-500"
                   : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <UsersIcon />
               <span>Suppliers</span>
@@ -104,6 +113,7 @@ function AdminSidebar() {
                   ? "text-white bg-green-500"
                   : ""
               } text-black-600 duration-300`}
+              onClick={() => dispatch(setSidebarShow(false))}
             >
               <UsersRoundIcon />
               <span>Customers</span>
@@ -111,6 +121,12 @@ function AdminSidebar() {
           </div>
         </div>
       </div>
+      <div
+        className={`fixed top-0 left-0 w-full h-full bg-black-900/30 duration-200 z-[60] ${
+          showSidebar ? "block lg:hidden" : "hidden"
+        }`}
+        onClick={() => dispatch(setSidebarShow(false))}
+      ></div>
     </aside>
   );
 }

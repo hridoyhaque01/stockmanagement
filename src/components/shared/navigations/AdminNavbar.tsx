@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RootState } from "@/store";
 import { logout } from "@/store/modules/auth/slice";
-import { setSearchValue } from "@/store/modules/common/slice";
-import { LogOutIcon, SearchIcon, UserPenIcon } from "lucide-react";
+import { setSearchValue, setSidebarShow } from "@/store/modules/common/slice";
+import { LogOutIcon, MenuIcon, SearchIcon, UserPenIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,14 @@ function AdminNavbar() {
   };
   return (
     <nav className="py-4 px-6 bg-white flex items-center">
-      <h4 className="text-xl font-semibold text-black-700 whitespace-nowrap">{navTitle}</h4>
+      <div className="flex items-center gap-4">
+        <button type="button" onClick={() => dispatch(setSidebarShow(true))}>
+          <MenuIcon />
+        </button>
+        <h4 className="text-xl font-semibold text-black-700 whitespace-nowrap">
+          {navTitle}
+        </h4>
+      </div>
       <div className="w-full flex items-center justify-end gap-4">
         <label htmlFor="search" className="relative flex w-full max-w-[340px]">
           <input
