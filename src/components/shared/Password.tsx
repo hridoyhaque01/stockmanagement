@@ -25,8 +25,6 @@ function Password({
   const [showPassword, setShowPassword] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
-  const [isFocused, setIsFocused] = useState(false);
-
   useEffect(() => {
     const handleInput = () => {
       if (ref.current) {
@@ -56,8 +54,6 @@ focus:border-neutral-300 p-3 rounded-lg cursor-text ${innerWrapper}`}
           type={showPassword ? "text" : "password"}
           className="input-none"
           autoComplete="off"
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           ref={ref}
           {...rest}
           id={id}

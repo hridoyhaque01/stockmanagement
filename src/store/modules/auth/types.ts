@@ -8,6 +8,6 @@ export interface Profile {
 export interface AuthState {
   auth: {
     token?: string;
-    profile: Profile;
+    profile?: Profile;
   };
 }

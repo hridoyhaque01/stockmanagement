@@ -55,6 +55,7 @@ function AddSales() {
                   <button
                     className="flex items-center gap-2 text-red-100 text-base"
                     type="button"
+                    onClick={() => setOrders([])}
                   >
                     <PlusCircleIcon className="w-5 h-5" />
                     <span>Add Grain</span>
