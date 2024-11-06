@@ -53,6 +53,15 @@ export interface CustomerAddForm {
   customerAddress?: string;
 }
 
+export interface SaleGrain {
+  grainId: string;
+  grainName: string;
+  quantity: number;
+  price: number;
+  sellingPrice: number;
+  category: string;
+}
+
 type UsePaginationProps<T> = {
   data?: T[];
 };

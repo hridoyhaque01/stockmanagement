@@ -37,7 +37,8 @@ const formattedPhoneNumber = (event: React.ChangeEvent) => {
 
 function getPageTitle(pathname: string, routes: RoutePathConfig) {
   const route = Object?.values(routes)?.find(
-    (route) => route?.path === pathname || pathname?.includes(route?.routePath)
+    (route) =>
+      route?.path === pathname || pathname?.includes(route.routePath ?? "")
   );
   return route ? route?.name : null;
 }

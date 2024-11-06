@@ -19,17 +19,17 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { RootState } from "@/store";
-import { Supplier } from "@/store/modules/suppliers/types";
+import { Customer } from "@/store/modules/customers/types";
 import { useSelector } from "react-redux";
 
-export default function SupplierSearch({
-  supplier,
-  setSupplier,
+export default function CustomerSearch({
+  customer,
+  setCustomer,
 }: {
-  supplier: Supplier | undefined;
-  setSupplier: React.Dispatch<React.SetStateAction<Supplier | undefined>>;
+  customer: Customer | undefined;
+  setCustomer: React.Dispatch<React.SetStateAction<Customer | undefined>>;
 }) {
-  const { suppliers } = useSelector((state: RootState) => state.suppliers);
+  const { customers } = useSelector((state: RootState) => state.customers);
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -41,22 +41,22 @@ export default function SupplierSearch({
           aria-expanded={open}
           className="justify-between font-normal"
         >
-          {supplier?.supplierPhone ? supplier?.supplierPhone : "Select Supplier"}
+          {customer?.customerPhone ? customer?.customerPhone : "Select Customer"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search Supplier..." />
+          <CommandInput placeholder="Search Customer..." />
           <CommandList>
-            <CommandEmpty>No suppliers found.</CommandEmpty>
+            <CommandEmpty>No customers found.</CommandEmpty>
             <CommandGroup>
-              {suppliers?.map((item) => (
+              {customers?.map((item) => (
                 <CommandItem
                   key={item?.id}
                   onSelect={() => {
-                    setSupplier(
-                      item?.supplierPhone == supplier?.supplierPhone
+                    setCustomer(
+                      item?.customerPhone == customer?.customerPhone
                         ? undefined
                         : item
                     );
@@ -67,12 +67,12 @@ export default function SupplierSearch({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      supplier?.supplierPhone === item?.supplierPhone
+                      customer?.customerPhone === item?.customerPhone
                         ? "opacity-100"
                         : "opacity-0"
                     )}
                   />
-                  {item?.supplierPhone}
+                  {item?.customerPhone}
                 </CommandItem>
               ))}
             </CommandGroup>
