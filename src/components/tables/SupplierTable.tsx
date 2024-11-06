@@ -23,16 +23,26 @@ function SupplierTable({ data = [] }: { data: Supplier[] }) {
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
-            <TableHead className="w-[150px] text-white">
+            <TableHead className="w-[150px] text-white  truncate">
               Supplier Name
             </TableHead>
-            <TableHead className="text-white">Supplier Email</TableHead>
-            <TableHead className="text-white">Supplier Phone</TableHead>
-            <TableHead className="text-white">Supplier Address</TableHead>
-            <TableHead className="text-white">Total Paid</TableHead>
-            <TableHead className="text-white">Total Due</TableHead>
-            <TableHead className=" text-white">Total Balance</TableHead>
-            <TableHead className="text-center text-white">Action</TableHead>
+            <TableHead className="text-white  truncate">
+              Supplier Email
+            </TableHead>
+            <TableHead className="text-white  truncate">
+              Supplier Phone
+            </TableHead>
+            <TableHead className="text-white  truncate">
+              Supplier Address
+            </TableHead>
+            <TableHead className="text-white  truncate">Total Paid</TableHead>
+            <TableHead className="text-white  truncate">Total Due</TableHead>
+            <TableHead className=" text-white  truncate">
+              Total Balance
+            </TableHead>
+            <TableHead className="text-center text-white  truncate">
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

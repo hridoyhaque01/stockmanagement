@@ -24,11 +24,11 @@ function GrainTable({ data = [] }: { data: Grain[] }) {
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
-            <TableHead className="w-[150px] text-white">Product Id</TableHead>
-            <TableHead className="text-white">Product Name</TableHead>
-            <TableHead className="text-white">Quantity</TableHead>
-            <TableHead className="text-white">Price</TableHead>
-            <TableHead className="text-center text-white">Action</TableHead>
+            <TableHead className="w-[150px] text-white  truncate">Product Id</TableHead>
+            <TableHead className="text-white  truncate">Product Name</TableHead>
+            <TableHead className="text-white  truncate">Quantity</TableHead>
+            <TableHead className="text-white  truncate">Price</TableHead>
+            <TableHead className="text-center text-white  truncate">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

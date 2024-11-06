@@ -23,16 +23,16 @@ function CustomersTable({ data = [] }: { data: Customer[] }) {
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
-            <TableHead className="w-[150px] text-white">
+            <TableHead className="w-[150px] text-white truncate">
               Customer Name
             </TableHead>
-            <TableHead className="text-white">Customer Email</TableHead>
-            <TableHead className="text-white">Customer Phone</TableHead>
-            <TableHead className="text-white">Customer Address</TableHead>
-            <TableHead className=" text-white">Total Paid</TableHead>
-            <TableHead className=" text-white">Total Due</TableHead>
-            <TableHead className=" text-white">Total Balance</TableHead>
-            <TableHead className="text-center text-white">Action</TableHead>
+            <TableHead className="text-white truncate">Customer Email</TableHead>
+            <TableHead className="text-white truncate">Customer Phone</TableHead>
+            <TableHead className="text-white truncate">Customer Address</TableHead>
+            <TableHead className=" text-white truncate">Total Paid</TableHead>
+            <TableHead className=" text-white truncate">Total Due</TableHead>
+            <TableHead className=" text-white truncate">Total Balance</TableHead>
+            <TableHead className="text-center text-white truncate">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -18,15 +18,19 @@ function SaleTable({ data = [] }: { data: Sale[] }) {
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
-            <TableHead className="w-[150px] text-white">
+            <TableHead className="w-[150px] text-white  truncate">
               Customer Name
             </TableHead>
-            <TableHead className="text-white">Customer Phone</TableHead>
-            <TableHead className="text-white">Quantity</TableHead>
-            <TableHead className="text-white">Total Amount</TableHead>
-            <TableHead className=" text-white">Paid Amount</TableHead>
-            <TableHead className=" text-white">Due Amount</TableHead>
-            <TableHead className="text-center text-white">Action</TableHead>
+            <TableHead className="text-white  truncate">
+              Customer Phone
+            </TableHead>
+            <TableHead className="text-white  truncate">Quantity</TableHead>
+            <TableHead className="text-white  truncate">Total Amount</TableHead>
+            <TableHead className=" text-white  truncate">Paid Amount</TableHead>
+            <TableHead className=" text-white  truncate">Due Amount</TableHead>
+            <TableHead className="text-center text-white  truncate">
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
