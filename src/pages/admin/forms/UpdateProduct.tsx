@@ -1,10 +1,17 @@
 import { adminRoutes } from "@/common/constants";
 import Input from "@/components/shared/Input";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import useToastify from "@/hooks/useToastify";
+import { useUpdateProductMutation } from "@/store/modules/products/api";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function AddProduct() {
+function UpdateProduct() {
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+  const { state } = useLocation();
   const navigate = useNavigate();
+  const { errorNotify, infoNotify } = useToastify();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -16,7 +23,18 @@ function AddProduct() {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+    updateProduct({
+      id: state?.id,
+      data: formData,
+    })
+      .unwrap()
+      .then((res) => {
+        navigate(adminRoutes.products.path);
+        infoNotify(res?.message);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
   return (
     <div className="p-6">
@@ -38,7 +56,8 @@ function AddProduct() {
               placeholder="Enter product id"
               name="productId"
               labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
-              required
+              defaultValue={state?.productId}
+              readOnly
             />
             <Input
               wrapper="sm:flex-row sm:items-center sm:gap-4"
@@ -47,6 +66,7 @@ function AddProduct() {
               name="productName"
               labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
               required
+              defaultValue={state?.productName}
             />
           </div>
           <div className="flex items-center justify-end mt-10 gap-4">
@@ -64,8 +84,9 @@ function AddProduct() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }
 
-export default AddProduct;
+export default UpdateProduct;

@@ -1,4 +1,4 @@
-import { adminRoutes, logo } from "@/common/constants";
+import { adminRoutes, images } from "@/common/constants";
 import { RootState } from "@/store";
 import { setSidebarShow } from "@/store/modules/common/slice";
 import {
@@ -33,7 +33,7 @@ function AdminSidebar() {
           className="w-full max-w-[220px] mx-auto sticky px-4 top-0 shrink-0"
           onClick={() => dispatch(setSidebarShow(false))}
         >
-          <img src={logo} alt="" />
+          <img src={images.logo} alt="" />
         </Link>
         <div className="h-full overflow-auto no-scrollbar">
           {/* nav items  */}

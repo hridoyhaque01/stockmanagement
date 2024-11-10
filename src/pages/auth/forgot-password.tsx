@@ -1,4 +1,4 @@
-import { auth, authRoutes, logo } from "@/common/constants";
+import { authRoutes, images } from "@/common/constants";
 import { ArrowLeft } from "@/common/constants/svgs";
 import Input from "@/components/shared/Input";
 import React from "react";
@@ -20,7 +20,7 @@ function ForgotPassword() {
           </Link>
           <div className="w-full">
             <img
-              src={logo}
+              src={images.logo}
               alt="grain map"
               className="w-full max-w-[220px] mx-auto object-contain"
             />
@@ -44,7 +44,7 @@ function ForgotPassword() {
           </div>
         </div>
         <div className="w-full h-full hidden sm:block">
-          <img src={auth} className="w-full h-full object-cover bg-fixed" />
+          <img src={images.auth} className="w-full h-full object-cover bg-fixed" />
         </div>
       </div>
     </section>

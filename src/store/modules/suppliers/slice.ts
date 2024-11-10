@@ -2,135 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SuppliersState } from "./types";
 
 const initialState: SuppliersState = {
-  suppliers: [
-    {
-      id: "671d56f73cad2d63e636db9e",
-      supplierName: "S01",
-      supplierEmail: "",
-      supplierPhone: "1231221",
-      supplierAddress: "",
-      totalDue: 0,
-      totalPaid: 200,
-      totalBalance: 200,
-    },
-    {
-      id: "1a2d34c56f78e9b0c1d2a3e4",
-      supplierName: "S02",
-      supplierEmail: "supplier2@example.com",
-      supplierPhone: "4567890",
-      supplierAddress: "123 Oak Lane",
-      totalDue: 50,
-      totalPaid: 150,
-      totalBalance: 200,
-    },
-    {
-      id: "2b3e45d67f89a0c1d2b3f4g5",
-      supplierName: "S03",
-      supplierEmail: "supplier3@example.com",
-      supplierPhone: "7894561",
-      supplierAddress: "456 Pine St",
-      totalDue: 0,
-      totalPaid: 300,
-      totalBalance: 300,
-    },
-    {
-      id: "3c4f56e78g90b1a2c3d4e5f6",
-      supplierName: "S04",
-      supplierEmail: "supplier4@example.com",
-      supplierPhone: "1011121",
-      supplierAddress: "789 Maple Rd",
-      totalDue: 20,
-      totalPaid: 180,
-      totalBalance: 200,
-    },
-    {
-      id: "4d5g67f89h01c2b3a4d5f6e7",
-      supplierName: "S05",
-      supplierEmail: "supplier5@example.com",
-      supplierPhone: "1121314",
-      supplierAddress: "321 Birch Ave",
-      totalDue: 100,
-      totalPaid: 200,
-      totalBalance: 300,
-    },
-    {
-      id: "5e6h78g90i12d3c4b5a6f7g8",
-      supplierName: "S06",
-      supplierEmail: "supplier6@example.com",
-      supplierPhone: "1415161",
-      supplierAddress: "654 Cedar Blvd",
-      totalDue: 0,
-      totalPaid: 500,
-      totalBalance: 500,
-    },
-    {
-      id: "6f7i89h01j23a4b5c6d7e8f9",
-      supplierName: "S07",
-      supplierEmail: "supplier7@example.com",
-      supplierPhone: "1617181",
-      supplierAddress: "987 Spruce Way",
-      totalDue: 40,
-      totalPaid: 360,
-      totalBalance: 400,
-    },
-    {
-      id: "7g8j90i12k34b5c6d7a8e9f0",
-      supplierName: "S08",
-      supplierEmail: "supplier8@example.com",
-      supplierPhone: "1718192",
-      supplierAddress: "258 Pine Dr",
-      totalDue: 25,
-      totalPaid: 275,
-      totalBalance: 300,
-    },
-    {
-      id: "8h9k01j23l45c6d7b8a9f0e1",
-      supplierName: "S09",
-      supplierEmail: "supplier9@example.com",
-      supplierPhone: "1819202",
-      supplierAddress: "753 Fir Ln",
-      totalDue: 15,
-      totalPaid: 285,
-      totalBalance: 300,
-    },
-    {
-      id: "9i0l12k34m56a7c8d9b0e2f3",
-      supplierName: "S10",
-      supplierEmail: "supplier10@example.com",
-      supplierPhone: "1920212",
-      supplierAddress: "159 Redwood St",
-      totalDue: 60,
-      totalPaid: 240,
-      totalBalance: 300,
-    },
-    {
-      id: "0j1m23l45n67b8c9d0a1f3e4",
-      supplierName: "S11",
-      supplierEmail: "supplier11@example.com",
-      supplierPhone: "2021222",
-      supplierAddress: "963 Walnut Ave",
-      totalDue: 80,
-      totalPaid: 320,
-      totalBalance: 400,
-    },
-    {
-      id: "1k2n34m56o78c9d0b1a2f4e5",
-      supplierName: "S12",
-      supplierEmail: "supplier12@example.com",
-      supplierPhone: "2122232",
-      supplierAddress: "852 Cherry Blvd",
-      totalDue: 100,
-      totalPaid: 100,
-      totalBalance: 200,
-    },
-  ],
+  suppliers: [],
 };
 
 const slice = createSlice({
   name: "supplierSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setSuppliers: (state, action) => {
+      state.suppliers = action.payload;
+    },
+    setSupplier: (state, action) => {
+      state.suppliers = [...state.suppliers, action.payload];
+    },
+  },
 });
 
-export const {} = slice.actions;
+export const { setSuppliers, setSupplier } = slice.actions;
 export default slice.reducer;

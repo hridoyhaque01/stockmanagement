@@ -1,3 +1,9 @@
+import { Customer } from "@/store/modules/customers/types";
+import { Grain, GrainHistory } from "@/store/modules/grains/types";
+import { Product } from "@/store/modules/products/types";
+import { Sale } from "@/store/modules/sales/types";
+import { Supplier } from "@/store/modules/suppliers/types";
+import { Supplies } from "@/store/modules/supplies/types";
 import { ReactNode } from "react";
 
 export interface ChildrenProps {
@@ -25,7 +31,7 @@ export interface AddSuppliesForm {
   supplierId?: string | undefined;
   type: string;
   category: string;
-  insertDate?: Date | undefined;
+  proccessTime?: number | undefined;
 }
 
 export interface GrainAddForm {
@@ -36,7 +42,7 @@ export interface GrainAddForm {
   type: string;
   productCategory: string;
   grainCategory: string;
-  insertDate?: Date | undefined;
+  proccessTime?: number | undefined;
 }
 
 export interface SupplierAddForm {
@@ -60,6 +66,76 @@ export interface SaleGrain {
   price: number;
   sellingPrice: number;
   category: string;
+}
+
+export interface ProductTableProps {
+  data?: Product[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface SupplierTableProps {
+  data?: Supplier[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface CustomerTableProps {
+  data?: Customer[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface GrainHistoryTableProps {
+  data?: GrainHistory[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface GrainTableProps {
+  data?: Grain[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface SalesTableProps {
+  data?: Sale[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface SuppliesTableProps {
+  data?: Supplies[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
 }
 
 type UsePaginationProps<T> = {

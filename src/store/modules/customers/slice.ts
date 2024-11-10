@@ -2,135 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CustomerState } from "./types";
 
 const initialState: CustomerState = {
-  customers: [
-    {
-      id: "671d57ae91f60e3d4acdf6aa",
-      customerName: "Hridoy",
-      customerEmail: "",
-      customerPhone: "01821821",
-      customerAddress: "",
-      totalDue: 30,
-      totalPaid: 360,
-      totalBalance: 390,
-    },
-    {
-      id: "8b2e9a0f8d7c1a3e5f4d6b7c",
-      customerName: "Sarah",
-      customerEmail: "sarah@example.com",
-      customerPhone: "01712345",
-      customerAddress: "123 Elm Street",
-      totalDue: 50,
-      totalPaid: 150,
-      totalBalance: 200,
-    },
-    {
-      id: "5f3d9c7a2b1e4f6a8d9b0c7e",
-      customerName: "Alex",
-      customerEmail: "alex@example.com",
-      customerPhone: "01987654",
-      customerAddress: "456 Oak Street",
-      totalDue: 20,
-      totalPaid: 180,
-      totalBalance: 200,
-    },
-    {
-      id: "1d6e4b7f9a2c5a0d3f8b9e7d",
-      customerName: "Emily",
-      customerEmail: "emily@example.com",
-      customerPhone: "01567890",
-      customerAddress: "789 Maple Street",
-      totalDue: 40,
-      totalPaid: 360,
-      totalBalance: 400,
-    },
-    {
-      id: "9a8b6c4d1e3f5b7d2a0c9f6e",
-      customerName: "John",
-      customerEmail: "john@example.com",
-      customerPhone: "01812345",
-      customerAddress: "321 Birch Avenue",
-      totalDue: 70,
-      totalPaid: 230,
-      totalBalance: 300,
-    },
-    {
-      id: "7e2f8d9a3b1c6a5d4f0b9c6e",
-      customerName: "Rachel",
-      customerEmail: "rachel@example.com",
-      customerPhone: "01654321",
-      customerAddress: "654 Cedar Lane",
-      totalDue: 15,
-      totalPaid: 135,
-      totalBalance: 150,
-    },
-    {
-      id: "3f4a9e1d6b2c7d8a0e5b7c9d",
-      customerName: "Michael",
-      customerEmail: "michael@example.com",
-      customerPhone: "01498765",
-      customerAddress: "987 Spruce Road",
-      totalDue: 100,
-      totalPaid: 400,
-      totalBalance: 500,
-    },
-    {
-      id: "2d7e5f3a9b6c1f4a8e0b3c7d",
-      customerName: "Olivia",
-      customerEmail: "olivia@example.com",
-      customerPhone: "01765432",
-      customerAddress: "258 Pine Drive",
-      totalDue: 25,
-      totalPaid: 175,
-      totalBalance: 200,
-    },
-    {
-      id: "8c3e9a1f5b7d4c6e0a2f9d5b",
-      customerName: "Liam",
-      customerEmail: "liam@example.com",
-      customerPhone: "01823456",
-      customerAddress: "753 Fir Lane",
-      totalDue: 35,
-      totalPaid: 315,
-      totalBalance: 350,
-    },
-    {
-      id: "6b9f2a3d4e1c8f7b0a5d3c9e",
-      customerName: "Sophia",
-      customerEmail: "sophia@example.com",
-      customerPhone: "01323456",
-      customerAddress: "159 Redwood St",
-      totalDue: 60,
-      totalPaid: 240,
-      totalBalance: 300,
-    },
-    {
-      id: "5d3b8e9f1a7c4b6d0f2a9c7e",
-      customerName: "William",
-      customerEmail: "william@example.com",
-      customerPhone: "01934567",
-      customerAddress: "963 Walnut Ave",
-      totalDue: 80,
-      totalPaid: 320,
-      totalBalance: 400,
-    },
-    {
-      id: "4a6d9b8f3e7c5a1d0f2b9c5e",
-      customerName: "Mia",
-      customerEmail: "mia@example.com",
-      customerPhone: "01234567",
-      customerAddress: "852 Cherry Blvd",
-      totalDue: 45,
-      totalPaid: 205,
-      totalBalance: 250,
-    },
-  ],
+  customers: [],
 };
 
 const slice = createSlice({
   name: "customerSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setCustomers: (state, action) => {
+      state.customers = action.payload;
+    },
+    setCustomer: (state, action) => {
+      state.customers = [...state.customers, action.payload];
+    },
+  },
 });
 
-export const {} = slice.actions;
+export const { setCustomers, setCustomer } = slice.actions;
 export default slice.reducer;

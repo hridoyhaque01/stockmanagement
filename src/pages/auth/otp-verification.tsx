@@ -1,9 +1,8 @@
 import {
   adminRoutes,
-  auth,
   authRoutes,
   checkEmailValidity,
-  logo,
+  images,
 } from "@/common/constants";
 import { ArrowLeft } from "@/common/constants/svgs";
 import NumberInput from "@/components/shared/NumberInput";
@@ -109,7 +108,7 @@ function OtpVerification() {
           </Link>
           <div className="w-full">
             <img
-              src={logo}
+              src={images.logo}
               alt="grain map"
               className="w-full max-w-[220px] mx-auto object-contain"
             />
@@ -135,6 +134,7 @@ function OtpVerification() {
                 <button
                   className="text-sm text-blue-700  -mt-2 text-right"
                   onClick={handleResendOtp}
+                  type="button"
                 >
                   Resend OTP
                 </button>
@@ -149,7 +149,10 @@ function OtpVerification() {
           </div>
         </div>
         <div className="w-full h-full hidden sm:block">
-          <img src={auth} className="w-full h-full object-cover bg-fixed" />
+          <img
+            src={images.auth}
+            className="w-full h-full object-cover bg-fixed"
+          />
         </div>
       </div>
       {(resendOtpLoading || isLoading) && <RequestLoader />}

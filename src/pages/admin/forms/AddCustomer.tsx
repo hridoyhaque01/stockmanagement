@@ -2,13 +2,16 @@ import { adminRoutes } from "@/common/constants";
 import { customerAddValidation } from "@/common/constants/validation";
 import { CustomerAddForm } from "@/common/types";
 import Input from "@/components/shared/Input";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
 import useToastify from "@/hooks/useToastify";
+import { useAddCustomerMutation } from "@/store/modules/customers/api";
 import { useNavigate } from "react-router-dom";
 
 function AddCustomer() {
+  const [addCustomer, { isLoading }] = useAddCustomerMutation();
   const navigate = useNavigate();
-  const { errorNotify } = useToastify();
+  const { errorNotify, infoNotify } = useToastify();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,7 +30,15 @@ function AddCustomer() {
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+    addCustomer(formData)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+        navigate(adminRoutes.customers.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
   return (
     <div className="p-6">
@@ -90,6 +101,7 @@ function AddCustomer() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

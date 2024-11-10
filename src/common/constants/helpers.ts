@@ -35,6 +35,13 @@ const formattedPhoneNumber = (event: React.ChangeEvent) => {
   return formattedNumber;
 };
 
+function getUnixValue(dateString: string): number | undefined {
+  if (!dateString) return;
+  const date = new Date(dateString);
+  const unixTimestamp = date.getTime() / 1000;
+  return unixTimestamp;
+}
+
 function getPageTitle(pathname: string, routes: RoutePathConfig) {
   const route = Object?.values(routes)?.find(
     (route) =>
@@ -43,4 +50,10 @@ function getPageTitle(pathname: string, routes: RoutePathConfig) {
   return route ? route?.name : null;
 }
 
-export { checkEmailValidity, formattedPhoneNumber, getPageTitle, handleNumber };
+export {
+  checkEmailValidity,
+  formattedPhoneNumber,
+  getPageTitle,
+  getUnixValue,
+  handleNumber,
+};

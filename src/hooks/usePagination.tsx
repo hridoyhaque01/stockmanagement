@@ -10,12 +10,15 @@ function usePagination<T>({ data = [] }: UsePaginationProps<T>) {
   const indexOfFirstRow = indexOfLastRow - rowPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
-  const pagination = (
-    <DynamicPagination
-      totalPages={totalPages}
-      onPageChange={(page) => setCurrentPage(page)}
-    />
-  );
+  const pagination =
+    totalPages == 0 ? (
+      <div></div>
+    ) : (
+      <DynamicPagination
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
+    );
 
   useEffect(() => {
     if (totalPages < currentPage) {

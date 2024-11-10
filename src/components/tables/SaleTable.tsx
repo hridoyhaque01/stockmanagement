@@ -1,3 +1,4 @@
+import { SalesTableProps } from "@/common/types";
 import {
   Table,
   TableBody,
@@ -7,10 +8,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
-import { Sale } from "@/store/modules/sales/types";
 import { PrinterIcon, TrashIcon } from "lucide-react";
+import { TableResponseHandler } from "./TableHandler";
 
-function SaleTable({ data = [] }: { data: Sale[] }) {
+function SaleTable({
+  data = [],
+  isLoading = false,
+  isError = false,
+  isNotFound = false,
+  isFound = false,
+  refetch = () => {},
+}: SalesTableProps) {
   const { pagination, currentRows } = usePagination({ data: data });
 
   return (
@@ -34,26 +42,35 @@ function SaleTable({ data = [] }: { data: Sale[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentRows?.map((item) => (
-            <TableRow key={item?.id}>
-              <TableCell>{item?.customer.customerName}</TableCell>
-              <TableCell>{item?.customer.customerPhone}</TableCell>
-              <TableCell>{item?.totalQuantity}</TableCell>
-              <TableCell>৳ {item?.totalPrice}</TableCell>
-              <TableCell>৳ {item?.totalPaid}</TableCell>
-              <TableCell>৳ {item?.totalDue}</TableCell>
-              <TableCell className="text-center">
-                <div className="flex items-center justify-center gap-3">
-                  <button type="button" className="text-blue-500">
-                    <PrinterIcon className="w-5 h-5" />
-                  </button>
-                  <button type="button" className="text-red-100">
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableResponseHandler
+            isLoading={isLoading}
+            isError={isError}
+            refetch={refetch}
+            isFound={isFound}
+            column={8}
+            isNotFound={isNotFound}
+          >
+            {currentRows?.map((item) => (
+              <TableRow key={item?.id}>
+                <TableCell>{item?.customer.customerName}</TableCell>
+                <TableCell>{item?.customer.customerPhone}</TableCell>
+                <TableCell>{item?.totalQuantity}</TableCell>
+                <TableCell>৳ {item?.totalPrice}</TableCell>
+                <TableCell>৳ {item?.totalPaid}</TableCell>
+                <TableCell>৳ {item?.totalDue}</TableCell>
+                <TableCell className="text-center">
+                  <div className="flex items-center justify-center gap-3">
+                    <button type="button" className="text-blue-500">
+                      <PrinterIcon className="w-5 h-5" />
+                    </button>
+                    <button type="button" className="text-red-100">
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableResponseHandler>
         </TableBody>
       </Table>
       <div className="py-4">{pagination}</div>

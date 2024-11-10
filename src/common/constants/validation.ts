@@ -11,8 +11,8 @@ const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.quantity) return { error: "Quantity is required" };
   if (!data.price) return { error: "Price is required" };
   if (!data.paidAmount) return { error: "Paid Amount is required" };
-  if (!data.dueAmount) return { error: "Due Amount is required" };
-  if (!data?.insertDate) return { error: "Date is required" };
+  if (data.dueAmount !== 0 && !data.dueAmount) return { error: "Due Amount is required" };
+  if (!data?.proccessTime) return { error: "Date is required" };
   return { error: null };
 };
 
@@ -23,7 +23,7 @@ const grainAddValidation = (data: GrainAddForm) => {
   if (!data?.grainQuantity) return { error: "Grain Quantity is required" };
   if (!data?.grainCategory) return { error: "Grain Category not selected" };
   if (!data?.price) return { error: "Price is required" };
-  if (!data?.insertDate) return { error: "Date is required" };
+  if (!data?.proccessTime) return { error: "Date is required" };
 
   return { error: null };
 };

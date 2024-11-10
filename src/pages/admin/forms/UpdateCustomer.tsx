@@ -28,7 +28,6 @@ function UpdateCustomer() {
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
   };
   return (
     <div className="p-6">
