@@ -1,4 +1,5 @@
 import { adminRoutes } from "@/common/constants";
+import { ProductTableProps } from "@/common/types";
 import {
   Table,
   TableBody,
@@ -11,13 +12,22 @@ import usePagination from "@/hooks/usePagination";
 import { Product } from "@/store/modules/products/types";
 import { PenBoxIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { TableResponseHandler } from "./TableHandler";
 
-function ProductTable({ data = [] }: { data: Product[] }) {
+function ProductTable({
+  data = [],
+  isLoading = false,
+  isError = false,
+  isNotFound = false,
+  isFound = false,
+  refetch = () => {},
+}: ProductTableProps) {
   const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
   const handleUpdateNavigation = (item: Product) => {
     navigate(adminRoutes.updateProduct.path, { state: item });
   };
+
   return (
     <>
       <Table className="">
@@ -38,26 +48,34 @@ function ProductTable({ data = [] }: { data: Product[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentRows?.map((item) => (
-            <TableRow key={item?.id}>
-              <TableCell className="font-medium">{item?.productId}</TableCell>
-              <TableCell>{item?.productName}</TableCell>
-              <TableCell>{item?.quantity}</TableCell>
-              <TableCell>৳ {item?.totalPrice}</TableCell>
-              <TableCell>৳ {item?.avaragePrice}</TableCell>
-              <TableCell className="text-center">
-                <div className="flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
-                  >
-                    <PenBoxIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableResponseHandler
+            isLoading={isLoading}
+            isError={isError}
+            refetch={refetch}
+            isFound={isFound}
+            isNotFound={isNotFound}
+          >
+            {currentRows?.map((item) => (
+              <TableRow key={item?.id}>
+                <TableCell className="font-medium">{item?.productId}</TableCell>
+                <TableCell>{item?.productName}</TableCell>
+                <TableCell>{item?.quantity}</TableCell>
+                <TableCell>৳ {item?.totalPrice}</TableCell>
+                <TableCell>৳ {item?.avaragePrice}</TableCell>
+                <TableCell className="text-center">
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      className="text-blue-500"
+                      onClick={() => handleUpdateNavigation(item)}
+                    >
+                      <PenBoxIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableResponseHandler>
         </TableBody>
       </Table>
       <div className="py-4">{pagination}</div>
@@ -66,3 +84,16 @@ function ProductTable({ data = [] }: { data: Product[] }) {
 }
 
 export default ProductTable;
+
+// export const useProductTable = ({
+//   data = [],
+//   isLoading = false,
+//   isError = false,
+//   isNotFound = false,
+//   isFound = false,
+//   refetch = () => {},
+// }: ProductTableProps) => {
+//   return {
+
+//   };
+// };

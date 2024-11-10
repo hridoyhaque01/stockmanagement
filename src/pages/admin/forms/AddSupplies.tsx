@@ -6,20 +6,24 @@ import DatePicker from "@/components/shared/DatePicker";
 import Input from "@/components/shared/Input";
 import NumberInput from "@/components/shared/NumberInput";
 import ProductSearch from "@/components/shared/ProductSearch";
+import RequestLoader from "@/components/shared/RequestLoader";
 import SupplierSearch from "@/components/shared/SupplierSearch";
 import { Button } from "@/components/ui/button";
 import useToastify from "@/hooks/useToastify";
 import { Product } from "@/store/modules/products/types";
 import { Supplier } from "@/store/modules/suppliers/types";
+import { useAddSupplyMutation } from "@/store/modules/supplies/api";
+import { getUnixTime } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddSupplies() {
+  const [addSupply, { isLoading }] = useAddSupplyMutation();
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>();
   const [product, setProduct] = useState<Product>();
   const [supplier, setSupplier] = useState<Supplier>();
-  const { errorNotify } = useToastify();
+  const { errorNotify, infoNotify } = useToastify();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,6 +39,7 @@ function AddSupplies() {
         : paidAmount === price
         ? "Full Paid"
         : "Partially Paid";
+    const proccessTime = getUnixTime(date || new Date());
     const data: AddSuppliesForm = {
       quantity: Number(quantity || 0),
       price: price,
@@ -44,24 +49,22 @@ function AddSupplies() {
       productId: product?.id,
       supplierId: supplier?.id,
       category: form.category.value,
-      insertDate: date,
+      proccessTime: proccessTime,
     };
     const { error } = addSuppliesValidation(data);
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
 
-    // const test = {
-    //   quantity: 12,
-    //   price: 200,
-    //   paidAmount: 200,
-    //   dueAmount: 0,
-    //   productId: "671d1c9281a5cfad08bb4787",
-    //   supplierId: "671d1c9690a23b692152b3ff",
-    //   type: "Full Paid",
-    //   category: "mon",
-    // };
+    addSupply(formData)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res.message);
+        navigate(adminRoutes.supplies.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
 
   return (
@@ -140,6 +143,7 @@ function AddSupplies() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

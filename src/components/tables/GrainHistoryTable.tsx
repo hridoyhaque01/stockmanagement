@@ -1,3 +1,4 @@
+import { GrainHistoryTableProps } from "@/common/types";
 import {
   Table,
   TableBody,
@@ -7,10 +8,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
-import { GrainHistory } from "@/store/modules/grains/types";
 import { TrashIcon } from "lucide-react";
+import { TableResponseHandler } from "./TableHandler";
 
-function GrainHistoryTable({ data = [] }: { data: GrainHistory[] }) {
+function GrainHistoryTable({
+  data = [],
+  isLoading = false,
+  isError = false,
+  isNotFound = false,
+  isFound = false,
+  refetch = () => {},
+}: GrainHistoryTableProps) {
   const { pagination, currentRows } = usePagination({ data: data });
   return (
     <>
@@ -39,41 +47,50 @@ function GrainHistoryTable({ data = [] }: { data: GrainHistory[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentRows?.map((item) => (
-            <TableRow key={item?.id}>
-              <TableCell className="font-medium whitespace-nowrap">
-                {item?.product.productId}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.product?.productName}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.productQuantity}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.productCategory}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.quantity}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.grainCategory}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                {item?.quantityLeft}
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                ৳ {item?.price}
-              </TableCell>
-              <TableCell className="text-center  whitespace-nowrap">
-                <div className="flex items-center justify-center gap-3">
-                  <button type="button" className="text-red-100">
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableResponseHandler
+            isLoading={isLoading}
+            isError={isError}
+            refetch={refetch}
+            isFound={isFound}
+            column={8}
+            isNotFound={isNotFound}
+          >
+            {currentRows?.map((item) => (
+              <TableRow key={item?.id}>
+                <TableCell className="font-medium whitespace-nowrap">
+                  {item?.product.productId}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.product?.productName}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.productQuantity}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.productCategory}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.quantity}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.grainCategory}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {item?.quantityLeft}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  ৳ {item?.price}
+                </TableCell>
+                <TableCell className="text-center  whitespace-nowrap">
+                  <div className="flex items-center justify-center gap-3">
+                    <button type="button" className="text-red-100">
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableResponseHandler>
         </TableBody>
       </Table>
       <div className="py-4">{pagination}</div>

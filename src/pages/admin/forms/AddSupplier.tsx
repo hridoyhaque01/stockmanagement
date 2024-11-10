@@ -2,13 +2,16 @@ import { adminRoutes } from "@/common/constants";
 import { supplierAddValidation } from "@/common/constants/validation";
 import { SupplierAddForm } from "@/common/types";
 import Input from "@/components/shared/Input";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
 import useToastify from "@/hooks/useToastify";
+import { useAddSupplierMutation } from "@/store/modules/suppliers/api";
 import { useNavigate } from "react-router-dom";
 
 function AddSupplier() {
+  const [addSupplier, { isLoading }] = useAddSupplierMutation();
   const navigate = useNavigate();
-  const { errorNotify } = useToastify();
+  const { errorNotify, infoNotify } = useToastify();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,7 +30,15 @@ function AddSupplier() {
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+    addSupplier(formData)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+        navigate(adminRoutes.suppliers.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
   return (
     <div className="p-6">
@@ -90,6 +101,7 @@ function AddSupplier() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

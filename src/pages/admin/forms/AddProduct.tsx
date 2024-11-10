@@ -1,10 +1,17 @@
 import { adminRoutes } from "@/common/constants";
 import Input from "@/components/shared/Input";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
+import useToastify from "@/hooks/useToastify";
+import { useAddProductMutation } from "@/store/modules/products/api";
 import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
+  const [addProduct, { isLoading }] = useAddProductMutation();
   const navigate = useNavigate();
+
+  const { errorNotify, infoNotify } = useToastify();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -16,7 +23,15 @@ function AddProduct() {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+    addProduct(formData)
+      .unwrap()
+      .then((res) => {
+        navigate(adminRoutes.products.path);
+        infoNotify(res?.message);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
   return (
     <div className="p-6">
@@ -64,6 +79,7 @@ function AddProduct() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

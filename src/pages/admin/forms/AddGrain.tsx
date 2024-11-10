@@ -6,17 +6,21 @@ import DatePicker from "@/components/shared/DatePicker";
 import Input from "@/components/shared/Input";
 import NumberInput from "@/components/shared/NumberInput";
 import ProductSearch from "@/components/shared/ProductSearch";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
 import useToastify from "@/hooks/useToastify";
+import { useAddGrainHistoryMutation } from "@/store/modules/grains/api";
 import { Product } from "@/store/modules/products/types";
+import { getUnixTime } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddGrain() {
+  const [addGrainHistory, { isLoading }] = useAddGrainHistoryMutation();
   const navigate = useNavigate();
   const [date, setDate] = useState<Date>();
   const [product, setProduct] = useState<Product>();
-  const { errorNotify } = useToastify();
+  const { errorNotify, infoNotify } = useToastify();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,6 +30,7 @@ function AddGrain() {
     const price = Number(form.price.value);
     const productCategory = form.productCategory.value;
     const grainCategory = form.grainCategory.value;
+    const proccessTime = getUnixTime(date || new Date());
 
     const data: GrainAddForm = {
       productId: product?.id,
@@ -35,14 +40,23 @@ function AddGrain() {
       type: "proccess",
       productCategory,
       grainCategory,
-      insertDate: date,
+      proccessTime: proccessTime,
     };
 
     const { error } = grainAddValidation(data);
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+
+    addGrainHistory(formData)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+        navigate(adminRoutes.grains.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
 
   return (
@@ -134,6 +148,7 @@ function AddGrain() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

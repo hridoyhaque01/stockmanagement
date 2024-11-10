@@ -1,4 +1,5 @@
 import { adminRoutes } from "@/common/constants";
+import { SupplierTableProps } from "@/common/types";
 import {
   Table,
   TableBody,
@@ -11,8 +12,16 @@ import usePagination from "@/hooks/usePagination";
 import { Supplier } from "@/store/modules/suppliers/types";
 import { PenBoxIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { TableResponseHandler } from "./TableHandler";
 
-function SupplierTable({ data = [] }: { data: Supplier[] }) {
+function SupplierTable({
+  data = [],
+  isLoading = false,
+  isError = false,
+  isNotFound = false,
+  isFound = false,
+  refetch = () => {},
+}: SupplierTableProps) {
   const navigate = useNavigate();
   const { pagination, currentRows } = usePagination({ data: data });
   const handleUpdateNavigation = (item: Supplier) => {
@@ -46,30 +55,39 @@ function SupplierTable({ data = [] }: { data: Supplier[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentRows?.map((item) => (
-            <TableRow key={item?.id}>
-              <TableCell className="font-medium">
-                {item?.supplierName}
-              </TableCell>
-              <TableCell>{item?.supplierEmail || "N/A"}</TableCell>
-              <TableCell>{item?.supplierPhone}</TableCell>
-              <TableCell>{item?.supplierAddress || "N/A"}</TableCell>
-              <TableCell>৳ {item?.totalPaid}</TableCell>
-              <TableCell>৳ {item?.totalDue}</TableCell>
-              <TableCell>৳ {item?.totalBalance}</TableCell>
-              <TableCell className="text-center">
-                <div className="flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    className="text-blue-500"
-                    onClick={() => handleUpdateNavigation(item)}
-                  >
-                    <PenBoxIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableResponseHandler
+            isLoading={isLoading}
+            isError={isError}
+            refetch={refetch}
+            isFound={isFound}
+            column={8}
+            isNotFound={isNotFound}
+          >
+            {currentRows?.map((item) => (
+              <TableRow key={item?.id}>
+                <TableCell className="font-medium">
+                  {item?.supplierName}
+                </TableCell>
+                <TableCell>{item?.supplierEmail || "N/A"}</TableCell>
+                <TableCell>{item?.supplierPhone}</TableCell>
+                <TableCell>{item?.supplierAddress || "N/A"}</TableCell>
+                <TableCell>৳ {item?.totalPaid}</TableCell>
+                <TableCell>৳ {item?.totalDue}</TableCell>
+                <TableCell>৳ {item?.totalBalance}</TableCell>
+                <TableCell className="text-center">
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      className="text-blue-500"
+                      onClick={() => handleUpdateNavigation(item)}
+                    >
+                      <PenBoxIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableResponseHandler>
         </TableBody>
       </Table>
       <div className="py-4">{pagination}</div>
