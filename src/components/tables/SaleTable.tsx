@@ -47,7 +47,7 @@ function SaleTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
-            column={8}
+            column={7}
             isNotFound={isNotFound}
           >
             {currentRows?.map((item) => (

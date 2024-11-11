@@ -19,7 +19,7 @@ export const authApi = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(saveAuthData(data?.data));
         } catch (error) {
-          console.error("Error resending OTP:", error);
+          console.error("Failed to login:", error);
         }
       },
     }),
@@ -43,7 +43,7 @@ export const authApi = apiSlice.injectEndpoints({
             dispatch(saveAuthData(data));
           }
         } catch (error) {
-          console.error("Error resending OTP:", error);
+          console.error("Failed to verify otp:", error);
         }
       },
     }),

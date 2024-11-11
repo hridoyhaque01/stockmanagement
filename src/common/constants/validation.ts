@@ -2,6 +2,7 @@ import {
   AddSuppliesForm,
   CustomerAddForm,
   GrainAddForm,
+  SaleAddForm,
   SupplierAddForm,
 } from "../types";
 const addSuppliesValidation = (data: AddSuppliesForm) => {
@@ -11,7 +12,8 @@ const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.quantity) return { error: "Quantity is required" };
   if (!data.price) return { error: "Price is required" };
   if (!data.paidAmount) return { error: "Paid Amount is required" };
-  if (data.dueAmount !== 0 && !data.dueAmount) return { error: "Due Amount is required" };
+  if (data.dueAmount !== 0 && !data.dueAmount)
+    return { error: "Due Amount is required" };
   if (!data?.proccessTime) return { error: "Date is required" };
   return { error: null };
 };
@@ -40,9 +42,20 @@ const customerAddValidation = (data: CustomerAddForm) => {
   return { error: null };
 };
 
+const saleAddValidation = (data: SaleAddForm) => {
+  if (data?.orders?.length === 0) return { error: "Orders is required" };
+  if (!data.customerName) return { error: "Customer Name is required" };
+  if (!data.customerPhone) return { error: "Customer Phone is required" };
+  if (!data?.totalPrice) return { error: "Total Price is required" };
+  if (!data?.totalPaid) return { error: "Total Paid is required" };
+  if (!data?.totalDue) return { error: "Total Due is required" };
+  return { error: null };
+};
+
 export {
   addSuppliesValidation,
   customerAddValidation,
   grainAddValidation,
+  saleAddValidation,
   supplierAddValidation,
 };

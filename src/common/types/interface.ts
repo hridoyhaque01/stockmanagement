@@ -1,7 +1,7 @@
 import { Customer } from "@/store/modules/customers/types";
 import { Grain, GrainHistory } from "@/store/modules/grains/types";
 import { Product } from "@/store/modules/products/types";
-import { Sale } from "@/store/modules/sales/types";
+import { Sale, SaleOrder } from "@/store/modules/sales/types";
 import { Supplier } from "@/store/modules/suppliers/types";
 import { Supplies } from "@/store/modules/supplies/types";
 import { ReactNode } from "react";
@@ -136,6 +136,18 @@ export interface SuppliesTableProps {
   isFound?: boolean;
   refetch: () => void;
   children?: ReactNode;
+}
+
+export interface SaleAddForm {
+  customerId: string | undefined;
+  customerName: string;
+  customerPhone: string;
+  totalQuantity: number;
+  totalPrice: number;
+  totalPaid: number;
+  totalDue: number;
+  type: string;
+  orders: SaleOrder[];
 }
 
 type UsePaginationProps<T> = {
