@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { grainsApi } from "../grains/api";
 import { setSale, setSales } from "./slice";
 
 export const salesApi = apiSlice.injectEndpoints({
@@ -33,6 +34,7 @@ export const salesApi = apiSlice.injectEndpoints({
             })
           );
           dispatch(setSale(order));
+          dispatch(grainsApi.endpoints.getGrains.initiate(null)).refetch();
         } catch (error) {
           console.error("Faild to add order:", error);
         }

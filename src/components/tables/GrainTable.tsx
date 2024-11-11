@@ -50,7 +50,7 @@ function GrainTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
-            column={8}
+            column={5}
             isNotFound={isNotFound}
           >
             {currentRows?.map((item) => (

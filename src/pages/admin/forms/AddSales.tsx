@@ -1,33 +1,87 @@
 import { adminRoutes } from "@/common/constants";
-import { SaleGrain } from "@/common/types";
+import { saleAddValidation } from "@/common/constants/validation";
+import { SaleAddForm } from "@/common/types";
+import ProductAddModal from "@/components/modals/ProductAddModal";
 import GrainCard from "@/components/sales/GrainCard";
 import CustomerSearch from "@/components/shared/CustomerSearch";
 import Input from "@/components/shared/Input";
 import NumberInput from "@/components/shared/NumberInput";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import useToastify from "@/hooks/useToastify";
+import { RootState } from "@/store";
 import { Customer } from "@/store/modules/customers/types";
+import { useAddSaleMutation } from "@/store/modules/sales/api";
+import {
+  setCustomerAddStatus,
+  setSaleCustomer,
+  setSelectedOrder,
+  updatePaidAmount,
+} from "@/store/modules/sales/slice";
+import { SaleOrder } from "@/store/modules/sales/types";
 import { MinusIcon, PlusCircleIcon, WheatIcon } from "lucide-react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function AddSales() {
-  const [customer, setCustomer] = useState<Customer>();
-  const [grains, setOrders] = useState<SaleGrain[]>([]);
-  const [addNewCustomer, setAddNewCustomer] = useState(false);
+  const [addSale, { isLoading }] = useAddSaleMutation();
+  const { orders, customer, isNewCustomer, details } = useSelector(
+    (state: RootState) => state.sales
+  );
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { errorNotify, infoNotify } = useToastify();
+
+  const handleModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleUpdateProduct = (item: SaleOrder) => {
+    setIsModalOpen(true);
+    dispatch(setSelectedOrder(item));
+  };
+
+  const handleCustomer = (item: Customer) => {
+    dispatch(setSaleCustomer(item));
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const form = event.target as HTMLFormElement;
+
+    const data: SaleAddForm = {
+      customerId: isNewCustomer ? undefined : customer?.id,
+      customerName: customer?.customerName || "",
+      customerPhone: customer?.customerPhone || "",
+      totalQuantity: Number(details?.totalQuantity || 0),
+      totalPrice: Number(details?.totalPrice || 0),
+      totalPaid: Number(details?.totalPaid || 0),
+      totalDue: Number(details?.totalDue || 0),
+      type: details?.type || "",
+      orders: [...orders],
+    };
+
+    const { error } = saleAddValidation(data);
+
+    if (error) {
+      return errorNotify(error);
+    }
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+
+    addSale(formData)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+        navigate(adminRoutes.sales.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message);
+      });
   };
+
   return (
     <div className="p-6 flex flex-col md:flex-row gap-6">
       <div className="w-full md:max-w-[620px]">
@@ -39,9 +93,14 @@ function AddSales() {
           </div>
           <div className="mt-6 w-full mx-auto">
             <div className="flex flex-col gap-4 sm:gap-6">
-              {/*  */}
-              {grains?.length > 0 ? (
-                <GrainCard />
+              {orders?.length > 0 ? (
+                orders?.map((grain, index) => (
+                  <GrainCard
+                    handler={(value) => handleUpdateProduct(value as SaleOrder)}
+                    item={grain}
+                    key={index}
+                  />
+                ))
               ) : (
                 <div className="text-base text-black-600 flex items-center gap-2">
                   <WheatIcon className="w-5 h-5" />
@@ -50,42 +109,14 @@ function AddSales() {
               )}
             </div>
             <div className="mt-6 ">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <button
-                    className="flex items-center gap-2 text-red-100 text-base"
-                    type="button"
-                    onClick={() => setOrders([])}
-                  >
-                    <PlusCircleIcon className="w-5 h-5" />
-                    <span>Add Grain</span>
-                  </button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
-                    <DialogDescription>
-                      Make changes to your profile here. Click save when you're
-                      done.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <label htmlFor="name" className="text-right">
-                        Name
-                      </label>
-                      <input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        className="col-span-3"
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <button
+                className="flex items-center gap-2 text-red-100 text-base"
+                type="button"
+                onClick={handleModal}
+              >
+                <PlusCircleIcon className="w-5 h-5" />
+                <span>Add Grain</span>
+              </button>
             </div>
           </div>
         </div>
@@ -104,7 +135,7 @@ function AddSales() {
             className="mt-6 w-full mx-auto"
           >
             <div className="flex flex-col gap-4 sm:gap-6">
-              {addNewCustomer ? (
+              {isNewCustomer ? (
                 <>
                   <Input
                     placeholder="Enter customer phone"
@@ -120,7 +151,7 @@ function AddSales() {
                     />
                     <button
                       className="w-14 flex items-center justify-center bg-red-300 text-white  rounded-lg"
-                      onClick={() => setAddNewCustomer(false)}
+                      onClick={() => dispatch(setCustomerAddStatus(false))}
                     >
                       <MinusIcon className="w-7 h-7" strokeWidth={1} />
                     </button>
@@ -131,11 +162,11 @@ function AddSales() {
                   <div className="flex gap-4">
                     <CustomerSearch
                       customer={customer}
-                      setCustomer={setCustomer}
+                      setCustomer={(value) => handleCustomer(value as Customer)}
                     />
                     <button
                       className="w-14 flex items-center justify-center bg-blue-600 text-white rounded-lg"
-                      onClick={() => setAddNewCustomer(true)}
+                      onClick={() => dispatch(setCustomerAddStatus(true))}
                     >
                       <PlusCircleIcon className="w-7 h-7" strokeWidth={1} />
                     </button>
@@ -144,6 +175,7 @@ function AddSales() {
                     placeholder="Customer name"
                     name="customerName"
                     readOnly
+                    defaultValue={customer?.customerName}
                   />
                 </>
               )}
@@ -153,10 +185,25 @@ function AddSales() {
                 name="totalQuantity"
                 required
                 readOnly
+                defaultValue={details?.totalQuantity}
               />
-              <NumberInput placeholder="Total Price" name="totalPrice" />
-              <NumberInput placeholder="Total Paid" name="totalPaid" />
-              <NumberInput placeholder="Total Due" name="totalDue" />
+              <NumberInput
+                placeholder="Total Price"
+                name="totalPrice"
+                defaultValue={details?.totalPrice?.toString()}
+              />
+              <NumberInput
+                placeholder="Total Paid"
+                name="totalPaid"
+                defaultValue={details?.totalPaid?.toString()}
+                setter={(value) => dispatch(updatePaidAmount(value))}
+              />
+              <NumberInput
+                placeholder="Total Due"
+                name="totalDue"
+                defaultValue={details?.totalDue?.toString()}
+                readOnly
+              />
             </div>
             <div className="flex items-center justify-end mt-10 gap-4">
               <Button
@@ -174,6 +221,8 @@ function AddSales() {
           </form>
         </div>
       </div>
+      <ProductAddModal open={isModalOpen} setOpen={setIsModalOpen} />
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

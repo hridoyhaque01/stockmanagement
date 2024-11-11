@@ -1,3 +1,5 @@
+import { Category } from "@/common/types/enums";
+
 export interface Grain {
   grainHistoryId: string;
   quantityLeft: number;
@@ -34,6 +36,28 @@ export interface Sale {
   customer: Customer;
 }
 
+export interface SaleOrder {
+  grainId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  sellingPrice: number;
+  category: Category;
+}
+
+export interface SaleDetails {
+  totalQuantity: number | null;
+  totalPrice: number | null;
+  totalPaid: number | null;
+  totalDue: number | null;
+  type: string | null;
+}
+
 export interface SalesState {
   sales: Sale[];
+  orders: SaleOrder[];
+  customer: Customer | undefined;
+  details: SaleDetails;
+  isNewCustomer: Boolean;
+  selectedOrder: SaleOrder | undefined;
 }

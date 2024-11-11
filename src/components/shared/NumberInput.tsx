@@ -22,7 +22,7 @@ function NumberInput({
   max?: number;
   length?: number;
   classes?: string;
-  setter?: (value: string) => string;
+  setter?: (value: string) => void;
   onChange?: (event: React.ChangeEvent, name: string, value: string) => void;
   label?: string;
   wrapper?: string;

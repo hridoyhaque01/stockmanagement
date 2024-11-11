@@ -52,7 +52,7 @@ function GrainHistoryTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
-            column={8}
+            column={9}
             isNotFound={isNotFound}
           >
             {currentRows?.map((item) => (
