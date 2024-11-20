@@ -1,4 +1,5 @@
 import { Category } from "@/common/types/enums";
+import { Customer } from "../customers/types";
 
 export interface Grain {
   grainHistoryId: string;
@@ -14,16 +15,17 @@ export interface Order {
   grains: Grain[];
 }
 
-export interface Customer {
-  id: string;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
-  customerAddress: string;
-  totalDue: number;
-  totalPaid: number;
-  totalBalance: number;
-}
+// export interface Customer {
+//   id?: string;
+//   customerName?: string;
+//   customerEmail?: string;
+//   customerPhone?: string;
+//   customerAddress?: string;
+//   totalDue?: number;
+//   totalPaid?: number;
+//   totalBalance?: number;
+//   timestamp?: number;
+// }
 
 export interface Sale {
   id: string;
@@ -59,7 +61,7 @@ export interface SalesState {
   sales: Sale[];
   customerSales: Sale[];
   orders: SaleOrder[];
-  customer: Customer | undefined;
+  customer?: Customer;
   details: SaleDetails;
   isNewCustomer: Boolean;
   selectedOrder: SaleOrder | undefined;
