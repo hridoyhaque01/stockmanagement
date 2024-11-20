@@ -12,6 +12,7 @@ const initialState: SalesState = {
     type: "Partial Payment",
   },
   orders: [],
+  customerSales: [],
   isNewCustomer: false,
   selectedOrder: undefined,
 };
@@ -22,6 +23,9 @@ const slice = createSlice({
   reducers: {
     setSales: (state, action) => {
       state.sales = action.payload;
+    },
+    setCustomerSales: (state, action) => {
+      state.customerSales = action.payload;
     },
     setSale: (state, action) => {
       state.sales = [...state.sales, action.payload];
@@ -75,6 +79,24 @@ const slice = createSlice({
     setSelectedOrder: (state, action) => {
       state.selectedOrder = action.payload;
     },
+    sortSales: (state, action) => {
+      const sortType = action.payload;
+      state.sales.sort((a, b) => {
+        if (sortType === "asc") {
+          return a.proccessTime - b.proccessTime;
+        }
+        return b.proccessTime - a.proccessTime;
+      });
+    },
+    sortCustomerSales: (state, action) => {
+      const sortType = action.payload;
+      state.customerSales.sort((a, b) => {
+        if (sortType === "asc") {
+          return a.proccessTime - b.proccessTime;
+        }
+        return b.proccessTime - a.proccessTime;
+      });
+    },
   },
 });
 
@@ -87,5 +109,8 @@ export const {
   setCustomerAddStatus,
   setSelectedOrder,
   updatePaidAmount,
+  setCustomerSales,
+  sortSales,
+  sortCustomerSales,
 } = slice.actions;
 export default slice.reducer;

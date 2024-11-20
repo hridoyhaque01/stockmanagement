@@ -1,6 +1,6 @@
 import { adminRoutes } from "@/common/constants";
 import PageNavigate from "@/components/shared/PageNavigate";
-import SuppliesTable from "@/components/tables/SuppliesTable";
+import SupplierSuppliesTable from "@/components/tables/SupplierSuppliesTable";
 import {
   Select,
   SelectContent,
@@ -10,16 +10,26 @@ import {
 } from "@/components/ui/select";
 import { RootState } from "@/store";
 import { isFetchBaseQueryError } from "@/store/modules/api/apiSlice";
-import { useGetSuppliesQuery } from "@/store/modules/supplies/api";
+import { useGetSupplierSuppliesQuery } from "@/store/modules/supplies/api";
 import { Supplies as SuppliesType } from "@/store/modules/supplies/types";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
-function Supplies() {
+function SupplierSupplies() {
   const [type, setType] = useState("purchase");
-  const { isLoading, isError, error, refetch } = useGetSuppliesQuery(null);
+  const { supplierId } = useParams();
+  const { state } = useLocation();
+  const { isLoading, isError, error, refetch } = useGetSupplierSuppliesQuery(
+    supplierId,
+    {
+      skip: !supplierId,
+    }
+  );
   const status = isFetchBaseQueryError(error) ? error.status : null;
-  const { supplies } = useSelector((state: RootState) => state.supplies);
+  const { supplierSupplies } = useSelector(
+    (state: RootState) => state.supplies
+  );
   const { searchValue } = useSelector((state: RootState) => state.common);
   const filterBySearch = (item: SuppliesType) => {
     if (searchValue && searchValue?.trim()?.length > 0) {
@@ -37,16 +47,14 @@ function Supplies() {
       return item?.type === "Due Payment";
     }
   };
-  let data = supplies?.filter(filterBySearch)?.filter(filterByType);
+  let data = supplierSupplies?.filter(filterBySearch)?.filter(filterByType);
 
   return (
     <div className="h-full p-6 flex flex-col overflow-auto">
       <PageNavigate
-        title="Supplies"
-        quantity={supplies?.length}
-        path={adminRoutes.addSupplies.path}
-        pathname="Add Supplies"
-        wrapper="flex-col sm:flex-row items-start sm:items-center"
+        prevPath={adminRoutes.suppliers.path}
+        title={`${state?.supplierName} Supplies`}
+        quantity={supplierSupplies?.length}
       >
         <Select value={type} onValueChange={setType}>
           <SelectTrigger className="w-full text-sm sm:text-base py-2 sm:py-2.5 max-w-max min-w-28 sm:min-w-32">
@@ -59,7 +67,7 @@ function Supplies() {
         </Select>
       </PageNavigate>
       <div className="w-full flex-1 bg-white rounded-2xl overflow-hidden flex flex-col">
-        <SuppliesTable
+        <SupplierSuppliesTable
           isLoading={isLoading}
           isError={isError && status !== 404 ? true : false}
           isFound={data?.length > 0}
@@ -72,4 +80,4 @@ function Supplies() {
   );
 }
 
-export default Supplies;
+export default SupplierSupplies;

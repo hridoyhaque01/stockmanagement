@@ -1,3 +1,4 @@
+import { getTableIndex } from "@/common/constants";
 import { SalesTableProps } from "@/common/types";
 import {
   Table,
@@ -8,7 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
-import { PrinterIcon, TrashIcon } from "lucide-react";
+import { sortSales } from "@/store/modules/sales/slice";
+import { ArrowDownUpIcon, PrinterIcon } from "lucide-react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { TableResponseHandler } from "./TableHandler";
 
 function SaleTable({
@@ -19,13 +23,32 @@ function SaleTable({
   isFound = false,
   refetch = () => {},
 }: SalesTableProps) {
-  const { pagination, currentRows } = usePagination({ data: data });
-
+  const { pagination, currentRows, currentPage } = usePagination({
+    data: data,
+  });
+  const dispatch = useDispatch();
+  const [type, setType] = useState("asc");
+  const toggleSort = () => {
+    if (type === "asc") {
+      setType("desc");
+      dispatch(sortSales("desc"));
+    } else {
+      setType("asc");
+      dispatch(sortSales("asc"));
+    }
+  };
   return (
     <>
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
+            <TableHead className=" text-white truncate">Serial</TableHead>
+            <TableHead className=" text-white truncate">
+              <button className="flex items-center gap-2" onClick={toggleSort}>
+                <span>Date</span>
+                <ArrowDownUpIcon className="w-5 h-5" />
+              </button>
+            </TableHead>
             <TableHead className="w-[150px] text-white  truncate">
               Customer Name
             </TableHead>
@@ -47,13 +70,23 @@ function SaleTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
-            column={7}
+            column={9}
             isNotFound={isNotFound}
           >
-            {currentRows?.map((item) => (
+            {currentRows?.map((item, index) => (
               <TableRow key={item?.id}>
-                <TableCell>{item?.customer.customerName}</TableCell>
-                <TableCell>{item?.customer.customerPhone}</TableCell>
+                <TableCell>
+                  {getTableIndex({
+                    currentPage: currentPage,
+                    rowsPerPage: 10,
+                    index: index,
+                  })}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(item?.proccessTime * 1000).toDateString()}
+                </TableCell>
+                <TableCell>{item?.customer.customerName || "N/A"}</TableCell>
+                <TableCell>{item?.customer.customerPhone || "N/A"}</TableCell>
                 <TableCell>{item?.totalQuantity}</TableCell>
                 <TableCell>৳ {item?.totalPrice}</TableCell>
                 <TableCell>৳ {item?.totalPaid}</TableCell>
@@ -63,9 +96,9 @@ function SaleTable({
                     <button type="button" className="text-blue-500">
                       <PrinterIcon className="w-5 h-5" />
                     </button>
-                    <button type="button" className="text-red-100">
+                    {/* <button type="button" className="text-red-100">
                       <TrashIcon className="w-5 h-5" />
-                    </button>
+                    </button> */}
                   </div>
                 </TableCell>
               </TableRow>

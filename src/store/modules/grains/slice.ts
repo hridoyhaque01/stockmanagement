@@ -22,9 +22,33 @@ const slice = createSlice({
     setGrainHistory: (state, action) => {
       state.grainHistories = [...state.grainHistories, action.payload];
     },
+    sortGrains: (state, action) => {
+      const sortType = action.payload;
+      state.grains.sort((a, b) => {
+        if (sortType === "asc") {
+          return a.timestamp - b.timestamp;
+        }
+        return b.timestamp - a.timestamp;
+      });
+    },
+    sortGrainHistories: (state, action) => {
+      const sortType = action.payload;
+      state.grainHistories.sort((a, b) => {
+        if (sortType === "asc") {
+          return a.proccessTime - b.proccessTime;
+        }
+        return b.proccessTime - a.proccessTime;
+      });
+    },
   },
 });
 
-export const { setGrains, setGrain, setGrainHistories, setGrainHistory } =
-  slice.actions;
+export const {
+  setGrains,
+  setGrain,
+  setGrainHistories,
+  setGrainHistory,
+  sortGrains,
+  sortGrainHistories,
+} = slice.actions;
 export default slice.reducer;

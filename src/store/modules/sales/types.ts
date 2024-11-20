@@ -34,6 +34,8 @@ export interface Sale {
   type: string;
   orders: Order[];
   customer: Customer;
+  timestamp: number;
+  proccessTime: number;
 }
 
 export interface SaleOrder {
@@ -55,6 +57,7 @@ export interface SaleDetails {
 
 export interface SalesState {
   sales: Sale[];
+  customerSales: Sale[];
   orders: SaleOrder[];
   customer: Customer | undefined;
   details: SaleDetails;

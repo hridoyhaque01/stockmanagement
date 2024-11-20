@@ -1,7 +1,12 @@
 import { apiSlice } from "../api/apiSlice";
 import { productApi } from "../products/api";
 import { suppliersApi } from "../suppliers/api";
-import { setSupplies, setSupply } from "./slice";
+import {
+  setProductSupplies,
+  setSupplierSupplies,
+  setSupplies,
+  setSupply,
+} from "./slice";
 
 export const suppliesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,6 +19,34 @@ export const suppliesApi = apiSlice.injectEndpoints({
           const data = await queryFulfilled;
           const supplies = data?.data?.data || [];
           dispatch(setSupplies(supplies));
+        } catch (error) {
+          console.error("Failed to fetch supplies:", error);
+        }
+      },
+    }),
+    getSupplierSupplies: builder.query({
+      query: (supplierId: string | undefined) => ({
+        url: `/supplies/supplier/${supplierId}`,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const data = await queryFulfilled;
+          const supplies = data?.data?.data || [];
+          dispatch(setSupplierSupplies(supplies));
+        } catch (error) {
+          console.error("Failed to fetch supplies:", error);
+        }
+      },
+    }),
+    getProductSupplies: builder.query({
+      query: (productId: string | undefined) => ({
+        url: `/supplies/product/${productId}`,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const data = await queryFulfilled;
+          const supplies = data?.data?.data || [];
+          dispatch(setProductSupplies(supplies));
         } catch (error) {
           console.error("Failed to fetch supplies:", error);
         }
@@ -47,4 +80,9 @@ export const suppliesApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSuppliesQuery, useAddSupplyMutation } = suppliesApi;
+export const {
+  useGetSuppliesQuery,
+  useAddSupplyMutation,
+  useGetSupplierSuppliesQuery,
+  useGetProductSuppliesQuery,
+} = suppliesApi;

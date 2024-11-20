@@ -5,6 +5,7 @@ export interface Product {
   quantity: number;
   totalPrice: number;
   avaragePrice: number;
+  timestamp: number;
 }
 
 export interface ProductsState {

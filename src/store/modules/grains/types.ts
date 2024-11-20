@@ -17,6 +17,7 @@ export interface Grain {
   quantity: number;
   price: number;
   product: Product;
+  timestamp: number;
 }
 
 export interface HistoryGrain {
@@ -37,6 +38,8 @@ export interface GrainHistory {
   type: string;
   grain: HistoryGrain;
   product: Product;
+  timestamp: number;
+  proccessTime: number;
 }
 
 export interface GrainsState {

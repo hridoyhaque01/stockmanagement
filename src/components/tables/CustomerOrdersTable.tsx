@@ -1,5 +1,5 @@
 import { getTableIndex } from "@/common/constants";
-import { SuppliesTableProps } from "@/common/types";
+import { CustomerSalesTableProps } from "@/common/types";
 import {
   Table,
   TableBody,
@@ -9,20 +9,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
-import { sortSupplies } from "@/store/modules/supplies/slice";
-import { ArrowDownUpIcon, TrashIcon } from "lucide-react";
+import { sortCustomerSales } from "@/store/modules/sales/slice";
+import { ArrowDownUpIcon, PrinterIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { TableResponseHandler } from "./TableHandler";
 
-function SuppliesTable({
+function CustomerOrdersTable({
   data = [],
   isLoading = false,
   isError = false,
   isNotFound = false,
   isFound = false,
   refetch = () => {},
-}: SuppliesTableProps) {
+}: CustomerSalesTableProps) {
   const { pagination, currentRows, currentPage } = usePagination({
     data: data,
   });
@@ -31,10 +31,10 @@ function SuppliesTable({
   const toggleSort = () => {
     if (type === "asc") {
       setType("desc");
-      dispatch(sortSupplies("desc"));
+      dispatch(sortCustomerSales("desc"));
     } else {
       setType("asc");
-      dispatch(sortSupplies("asc"));
+      dispatch(sortCustomerSales("asc"));
     }
   };
   return (
@@ -49,19 +49,11 @@ function SuppliesTable({
                 <ArrowDownUpIcon className="w-5 h-5" />
               </button>
             </TableHead>
-            <TableHead className="w-[150px] text-white truncate">
-              Product Id
-            </TableHead>
-            <TableHead className="text-white truncate">Product Name</TableHead>
-            <TableHead className="text-white truncate">Supplier Name</TableHead>
-            <TableHead className="text-white truncate">
-              Supplier Phone
-            </TableHead>
-            <TableHead className="text-white truncate">Quantity</TableHead>
-            <TableHead className="text-white truncate">Total Price</TableHead>
-            <TableHead className=" text-white truncate">Total Paid</TableHead>
-            <TableHead className=" text-white truncate">Total Due</TableHead>
-            <TableHead className="text-center text-white truncate">
+            <TableHead className="text-white  truncate">Quantity</TableHead>
+            <TableHead className="text-white  truncate">Total Amount</TableHead>
+            <TableHead className=" text-white  truncate">Paid Amount</TableHead>
+            <TableHead className=" text-white  truncate">Due Amount</TableHead>
+            <TableHead className="text-center text-white  truncate">
               Action
             </TableHead>
           </TableRow>
@@ -72,7 +64,7 @@ function SuppliesTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
-            column={11}
+            column={7}
             isNotFound={isNotFound}
           >
             {currentRows?.map((item, index) => (
@@ -87,21 +79,18 @@ function SuppliesTable({
                 <TableCell className="whitespace-nowrap">
                   {new Date(item?.proccessTime * 1000).toDateString()}
                 </TableCell>
-                <TableCell className="font-medium">
-                  {item?.product?.productId || "N/A"}
-                </TableCell>
-                <TableCell>{item?.product?.productName || "N/A"}</TableCell>
-                <TableCell>{item?.supplier?.supplierName || "N/A"}</TableCell>
-                <TableCell>{item?.supplier?.supplierPhone || "N/A"}</TableCell>
-                <TableCell>{item?.quantity}</TableCell>
-                <TableCell>৳ {item?.price}</TableCell>
-                <TableCell>৳ {item?.paidAmount}</TableCell>
-                <TableCell>৳ {item?.dueAmount}</TableCell>
+                <TableCell>{item?.totalQuantity}</TableCell>
+                <TableCell>৳ {item?.totalPrice}</TableCell>
+                <TableCell>৳ {item?.totalPaid}</TableCell>
+                <TableCell>৳ {item?.totalDue}</TableCell>
                 <TableCell className="text-center">
                   <div className="flex items-center justify-center gap-3">
                     <button type="button" className="text-blue-500">
-                      <TrashIcon className="w-5 h-5 text-red-100" />
+                      <PrinterIcon className="w-5 h-5" />
                     </button>
+                    {/* <button type="button" className="text-red-100">
+                      <TrashIcon className="w-5 h-5" />
+                    </button> */}
                   </div>
                 </TableCell>
               </TableRow>
@@ -114,4 +103,4 @@ function SuppliesTable({
   );
 }
 
-export default SuppliesTable;
+export default CustomerOrdersTable;

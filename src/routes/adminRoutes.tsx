@@ -23,6 +23,9 @@ const {
   updateSupplier,
   addCustomer,
   updateCustomer,
+  productHistories,
+  supplierSupplies,
+  customerOrders,
 } = adminRoutes;
 
 export const adminRoute: Route[] = [
@@ -42,6 +45,10 @@ export const adminRoute: Route[] = [
       {
         path: products.path,
         element: products.element,
+      },
+      {
+        path: productHistories.path,
+        element: productHistories.element,
       },
       {
         path: addProduct.path,
@@ -88,6 +95,10 @@ export const adminRoute: Route[] = [
         element: suppliers.element,
       },
       {
+        path: supplierSupplies.path,
+        element: supplierSupplies.element,
+      },
+      {
         path: addSupplier.path,
         element: addSupplier.element,
       },
@@ -99,6 +110,10 @@ export const adminRoute: Route[] = [
       {
         path: customers.path,
         element: customers.element,
+      },
+      {
+        path: customerOrders.path,
+        element: customerOrders.element,
       },
       {
         path: addCustomer.path,

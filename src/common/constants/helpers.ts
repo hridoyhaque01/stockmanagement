@@ -45,15 +45,36 @@ function getUnixValue(dateString: string): number | undefined {
 function getPageTitle(pathname: string, routes: RoutePathConfig) {
   const route = Object?.values(routes)?.find(
     (route) =>
-      route?.path === pathname || pathname?.includes(route.routePath ?? "")
+      route?.path === pathname || pathname?.includes(route.routePath ?? "N/A")
   );
   return route ? route?.name : null;
 }
+
+const getTableIndex = ({
+  currentPage = 0,
+  rowsPerPage = 0,
+  index = 0,
+}: {
+  currentPage: number;
+  rowsPerPage: number;
+  index: number;
+}) => {
+  let value: string | number = "0";
+  if (currentPage && rowsPerPage && index !== undefined) {
+    value =
+      currentPage === 1 && index + 1 < 10
+        ? "0" + (rowsPerPage * (currentPage - 1) + index + 1)
+        : rowsPerPage * (currentPage - 1) + index + 1;
+  }
+
+  return value;
+};
 
 export {
   checkEmailValidity,
   formattedPhoneNumber,
   getPageTitle,
+  getTableIndex,
   getUnixValue,
   handleNumber,
 };
