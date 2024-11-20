@@ -38,6 +38,8 @@ export default function useGetActivePath() {
     const isAdminRoute = location?.pathname?.includes("admin");
     const routes = isAdminRoute ? adminRoutes : authRoutes;
     const title = getPageTitle(pathname, routes);
+    // console.log("pathname", pathname);
+    // console.log("routes", routes);
     dispatch(setActiveNavTitle(title));
     dispatch(setSearchValue(""));
   };

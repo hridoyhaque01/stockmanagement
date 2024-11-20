@@ -4,6 +4,7 @@ import CustomersTable from "@/components/tables/CustomerTable";
 import { RootState } from "@/store";
 import { isFetchBaseQueryError } from "@/store/modules/api/apiSlice";
 import { useGetCustomersQuery } from "@/store/modules/customers/api";
+import { Customer } from "@/store/modules/customers/types";
 import { useSelector } from "react-redux";
 
 function Customers() {
@@ -11,7 +12,17 @@ function Customers() {
   const status = isFetchBaseQueryError(error) ? error.status : null;
 
   const { customers } = useSelector((state: RootState) => state.customers);
-
+  const { searchValue } = useSelector((state: RootState) => state.common);
+  const filterBySearch = (item: Customer) => {
+    if (searchValue && searchValue?.trim()?.length > 0) {
+      return item?.customerPhone
+        ?.toLowerCase()
+        .includes(searchValue.toLowerCase());
+    } else {
+      return true;
+    }
+  };
+  let data = customers?.filter(filterBySearch);
   return (
     <div className="h-full p-6 flex flex-col overflow-auto">
       <PageNavigate
@@ -24,10 +35,10 @@ function Customers() {
         <CustomersTable
           isLoading={isLoading}
           isError={isError && status !== 404 ? true : false}
-          isFound={customers?.length > 0}
-          isNotFound={customers?.length === 0}
+          isFound={data?.length > 0}
+          isNotFound={data?.length === 0}
           refetch={refetch}
-          data={customers}
+          data={data}
         />
       </div>
     </div>

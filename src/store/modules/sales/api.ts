@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 import { grainsApi } from "../grains/api";
-import { setSale, setSales } from "./slice";
+import { setCustomerSales, setSale, setSales } from "./slice";
 
 export const salesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,6 +13,20 @@ export const salesApi = apiSlice.injectEndpoints({
           const data = await queryFulfilled;
           const orders = data?.data?.data || [];
           dispatch(setSales(orders));
+        } catch (error) {
+          console.error("Failed to fetch orders:", error);
+        }
+      },
+    }),
+    getCustomerSales: builder.query({
+      query: (customerId: string | undefined) => ({
+        url: `/orders/customer/${customerId}`,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const data = await queryFulfilled;
+          const orders = data?.data?.data || [];
+          dispatch(setCustomerSales(orders));
         } catch (error) {
           console.error("Failed to fetch orders:", error);
         }
@@ -43,4 +57,8 @@ export const salesApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSalesQuery, useAddSaleMutation } = salesApi;
+export const {
+  useGetSalesQuery,
+  useAddSaleMutation,
+  useGetCustomerSalesQuery,
+} = salesApi;

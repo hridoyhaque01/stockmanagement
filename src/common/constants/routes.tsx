@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import Dashboard from "@/pages/admin";
+import CustomerOrders from "@/pages/admin/CustomerOrders";
 import Customers from "@/pages/admin/Customers";
 import AddCustomer from "@/pages/admin/forms/AddCustomer";
 import AddGrain from "@/pages/admin/forms/AddGrain";
@@ -12,10 +13,12 @@ import UpdateProduct from "@/pages/admin/forms/UpdateProduct";
 import UpdateSupplier from "@/pages/admin/forms/UpdateSupplier";
 import GrainHistories from "@/pages/admin/GrainHistories";
 import Grains from "@/pages/admin/Grains";
+import ProductHistories from "@/pages/admin/ProductHistories";
 import Products from "@/pages/admin/Products";
 import Profile from "@/pages/admin/Profile";
 import Sales from "@/pages/admin/Sales";
 import Suppliers from "@/pages/admin/Suppliers";
+import SupplierSupplies from "@/pages/admin/SupplierSupplies";
 import Supplies from "@/pages/admin/Supplies";
 import Home from "@/pages/auth";
 import ForgotPassword from "@/pages/auth/forgot-password";
@@ -45,6 +48,13 @@ const adminRoutes: RoutePathConfig = {
     path: "/admin/products",
     activePath: "products",
     element: <Products />,
+  },
+  productHistories: {
+    name: "Products Histories",
+    path: "/admin/products/:productId",
+    routePath: "/admin/products",
+    activePath: "products",
+    element: <ProductHistories />,
   },
   addProduct: {
     name: "Add Product",
@@ -111,6 +121,13 @@ const adminRoutes: RoutePathConfig = {
     activePath: "suppliers",
     element: <Suppliers />,
   },
+  supplierSupplies: {
+    name: "Supplier Supplies",
+    path: "/admin/suppliers/:supplierId",
+    routePath: "/admin/suppliers",
+    activePath: "suppliers",
+    element: <SupplierSupplies />,
+  },
   addSupplier: {
     name: "Add Supplier",
     path: "/admin/suppliers/add-supplier",
@@ -129,6 +146,13 @@ const adminRoutes: RoutePathConfig = {
     path: "/admin/customers",
     activePath: "customers",
     element: <Customers />,
+  },
+  customerOrders: {
+    name: "Customer Orders",
+    path: "/admin/customers/:customerId",
+    routePath: "/admin/customers",
+    activePath: "customers",
+    element: <CustomerOrders />,
   },
   addCustomer: {
     name: "Add Customer",

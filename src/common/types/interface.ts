@@ -20,6 +20,9 @@ export interface PageHeaderProps {
   quantity?: number;
   path?: string;
   pathname?: string;
+  prevPath?: string;
+  wrapper?: string;
+  children?: ReactNode;
 }
 
 export interface AddSuppliesForm {
@@ -52,9 +55,21 @@ export interface SupplierAddForm {
   supplierAddress?: string;
 }
 
+export interface SupplierUpdateForm {
+  supplierName?: string;
+  supplierEmail?: string;
+  supplierAddress?: string;
+}
+
 export interface CustomerAddForm {
   customerName: string;
   customerPhone: string;
+  customerEmail?: string;
+  customerAddress?: string;
+}
+
+export interface CustomerUpdateForm {
+  customerName?: string;
   customerEmail?: string;
   customerAddress?: string;
 }
@@ -128,7 +143,37 @@ export interface SalesTableProps {
   children?: ReactNode;
 }
 
+export interface CustomerSalesTableProps {
+  data?: Sale[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
 export interface SuppliesTableProps {
+  data?: Supplies[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface SupplierSuppliesTableProps {
+  data?: Supplies[];
+  isLoading?: boolean;
+  isError?: boolean;
+  isNotFound?: boolean;
+  isFound?: boolean;
+  refetch: () => void;
+  children?: ReactNode;
+}
+
+export interface ProductSuppliesTableProps {
   data?: Supplies[];
   isLoading?: boolean;
   isError?: boolean;

@@ -1,9 +1,11 @@
 import {
   AddSuppliesForm,
   CustomerAddForm,
+  CustomerUpdateForm,
   GrainAddForm,
   SaleAddForm,
   SupplierAddForm,
+  SupplierUpdateForm,
 } from "../types";
 const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.productId) return { error: "Product not selected" };
@@ -36,9 +38,21 @@ const supplierAddValidation = (data: SupplierAddForm) => {
   return { error: null };
 };
 
+const supplierUpdateValidation = (data: SupplierUpdateForm) => {
+  if (!data?.supplierName || !data?.supplierEmail || !data?.supplierAddress)
+    return { error: "At least one field is required" };
+  return { error: null };
+};
+
 const customerAddValidation = (data: CustomerAddForm) => {
   if (!data.customerName) return { error: "Customer Name is required" };
   if (!data.customerPhone) return { error: "Customer Phone is required" };
+  return { error: null };
+};
+
+const customerUpdateValidation = (data: CustomerUpdateForm) => {
+  if (!data?.customerName && !data?.customerEmail && !data?.customerAddress)
+    return { error: "At least one field is required" };
   return { error: null };
 };
 
@@ -58,4 +72,6 @@ export {
   grainAddValidation,
   saleAddValidation,
   supplierAddValidation,
+  supplierUpdateValidation,
+  customerUpdateValidation
 };

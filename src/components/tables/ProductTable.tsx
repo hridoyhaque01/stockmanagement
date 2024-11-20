@@ -1,4 +1,4 @@
-import { adminRoutes } from "@/common/constants";
+import { adminRoutes, getTableIndex } from "@/common/constants";
 import { ProductTableProps } from "@/common/types";
 import {
   Table,
@@ -9,8 +9,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
+import { sortProducts } from "@/store/modules/products/slice";
 import { Product } from "@/store/modules/products/types";
-import { PenBoxIcon } from "lucide-react";
+import { ArrowDownUpIcon, ClipboardList, PenBoxIcon } from "lucide-react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TableResponseHandler } from "./TableHandler";
 
@@ -23,9 +26,27 @@ function ProductTable({
   refetch = () => {},
 }: ProductTableProps) {
   const navigate = useNavigate();
-  const { pagination, currentRows } = usePagination({ data: data });
+  const { pagination, currentRows, currentPage } = usePagination({
+    data: data,
+  });
   const handleUpdateNavigation = (item: Product) => {
     navigate(adminRoutes.updateProduct.path, { state: item });
+  };
+  const dispatch = useDispatch();
+  const [type, setType] = useState("asc");
+  const toggleSort = () => {
+    if (type === "asc") {
+      setType("desc");
+      dispatch(sortProducts("desc"));
+    } else {
+      setType("asc");
+      dispatch(sortProducts("asc"));
+    }
+  };
+  const handleHistoryNavigation = (item: Product) => {
+    navigate(`${adminRoutes.productHistories.routePath}/${item?.id}`, {
+      state: item,
+    });
   };
 
   return (
@@ -33,6 +54,13 @@ function ProductTable({
       <Table className="">
         <TableHeader className="sticky top-0 z-30">
           <TableRow className="bg-green-400 hover:bg-green-400">
+            <TableHead className=" text-white truncate">Serial</TableHead>
+            <TableHead className=" text-white truncate">
+              <button className="flex items-center gap-2" onClick={toggleSort}>
+                <span>Date</span>
+                <ArrowDownUpIcon className="w-5 h-5" />
+              </button>
+            </TableHead>
             <TableHead className="w-[150px] text-white  truncate">
               Product Id
             </TableHead>
@@ -54,16 +82,34 @@ function ProductTable({
             refetch={refetch}
             isFound={isFound}
             isNotFound={isNotFound}
+            column={8}
           >
-            {currentRows?.map((item) => (
+            {currentRows?.map((item, index) => (
               <TableRow key={item?.id}>
-                <TableCell className="font-medium">{item?.productId}</TableCell>
-                <TableCell>{item?.productName}</TableCell>
+                <TableCell>
+                  {getTableIndex({
+                    currentPage: currentPage,
+                    rowsPerPage: 10,
+                    index: index,
+                  })}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(item?.timestamp * 1000).toDateString()}
+                </TableCell>
+                <TableCell className="font-medium">{item?.productId || "N/A"}</TableCell>
+                <TableCell>{item?.productName || "N/A"}</TableCell>
                 <TableCell>{item?.quantity}</TableCell>
                 <TableCell>৳ {item?.totalPrice}</TableCell>
                 <TableCell>৳ {item?.avaragePrice}</TableCell>
                 <TableCell className="text-center">
                   <div className="flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      className="text-blue-500"
+                      onClick={() => handleHistoryNavigation(item)}
+                    >
+                      <ClipboardList className="w-5 h-5 " />
+                    </button>
                     <button
                       type="button"
                       className="text-blue-500"

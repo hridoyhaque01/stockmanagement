@@ -23,8 +23,19 @@ const slice = createSlice({
         return product;
       });
     },
+
+    sortProducts: (state, action) => {
+      const sortType = action.payload;
+      state.products.sort((a, b) => {
+        if (sortType === "asc") {
+          return a.timestamp - b.timestamp;
+        }
+        return b.timestamp - a.timestamp;
+      });
+    },
   },
 });
 
-export const { setProducts, setProduct, updateProduct } = slice.actions;
+export const { setProducts, setProduct, updateProduct, sortProducts } =
+  slice.actions;
 export default slice.reducer;

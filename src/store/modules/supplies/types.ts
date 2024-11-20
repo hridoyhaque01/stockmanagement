@@ -21,9 +21,13 @@ export interface Supplies {
   type: string;
   category: string;
   product: Product;
-  supplier: Supplier;
+  supplier?: Supplier;
+  proccessTime: number;
+  timestamp: number;
 }
 
 export interface SuppliesState {
   supplies: Supplies[];
+  supplierSupplies: Supplies[];
+  productSupplies: Supplies[];
 }

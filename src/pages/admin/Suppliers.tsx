@@ -4,13 +4,24 @@ import SupplierTable from "@/components/tables/SupplierTable";
 import { RootState } from "@/store";
 import { isFetchBaseQueryError } from "@/store/modules/api/apiSlice";
 import { useGetSuppliersQuery } from "@/store/modules/suppliers/api";
+import { Supplier } from "@/store/modules/suppliers/types";
 import { useSelector } from "react-redux";
 
 function Suppliers() {
   const { isLoading, isError, error, refetch } = useGetSuppliersQuery(null);
   const status = isFetchBaseQueryError(error) ? error.status : null;
   const { suppliers } = useSelector((state: RootState) => state.suppliers);
-
+  const { searchValue } = useSelector((state: RootState) => state.common);
+  const filterBySearch = (item: Supplier) => {
+    if (searchValue && searchValue?.trim()?.length > 0) {
+      return item?.supplierPhone
+        ?.toLowerCase()
+        .includes(searchValue.toLowerCase());
+    } else {
+      return true;
+    }
+  };
+  let data = suppliers?.filter(filterBySearch);
   return (
     <div className="h-full p-6 flex flex-col overflow-auto">
       <PageNavigate
@@ -23,10 +34,10 @@ function Suppliers() {
         <SupplierTable
           isLoading={isLoading}
           isError={isError && status !== 404 ? true : false}
-          isFound={suppliers?.length > 0}
-          isNotFound={suppliers?.length === 0}
+          isFound={data?.length > 0}
+          isNotFound={data?.length === 0}
           refetch={refetch}
-          data={suppliers}
+          data={data}
         />
       </div>
     </div>

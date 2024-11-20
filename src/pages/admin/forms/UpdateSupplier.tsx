@@ -1,33 +1,43 @@
 import { adminRoutes } from "@/common/constants";
-import { supplierAddValidation } from "@/common/constants/validation";
-import { SupplierAddForm } from "@/common/types";
+import { supplierUpdateValidation } from "@/common/constants/validation";
+import { SupplierUpdateForm } from "@/common/types";
 import Input from "@/components/shared/Input";
+import RequestLoader from "@/components/shared/RequestLoader";
 import { Button } from "@/components/ui/button";
 import useToastify from "@/hooks/useToastify";
+import { useUpdateSupplierMutation } from "@/store/modules/suppliers/api";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function UpdateSupplier() {
   const navigate = useNavigate();
-  const { errorNotify } = useToastify();
+  const { errorNotify, infoNotify } = useToastify();
   const { state } = useLocation();
+  const [updateSupplier, { isLoading }] = useUpdateSupplierMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const supplierName = form.supplierName.value;
-    const supplierPhone = form.supplierPhone.value;
     const supplierEmail = form.supplierEmail.value;
     const supplierAddress = form.supplierAddress.value;
-    const data: SupplierAddForm = {
+    const data: SupplierUpdateForm = {
       supplierName,
-      supplierPhone,
       supplierEmail,
       supplierAddress,
     };
-    const { error } = supplierAddValidation(data);
+    const { error } = supplierUpdateValidation(data);
     if (error) return errorNotify(error);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
+    updateSupplier({ data: formData, id: state?.id })
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+        navigate(adminRoutes.suppliers.path);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message, () => handleSubmit(event));
+      });
   };
   return (
     <div className="p-6">
@@ -60,6 +70,7 @@ function UpdateSupplier() {
               labelClass="whitespace-nowrap sm:min-w-[110px] sm:text-right"
               required
               defaultValue={state?.supplierPhone}
+              readOnly
             />
             <Input
               wrapper="sm:flex-row sm:items-center sm:gap-4"
@@ -94,6 +105,7 @@ function UpdateSupplier() {
           </div>
         </form>
       </div>
+      {isLoading && <RequestLoader />}
     </div>
   );
 }

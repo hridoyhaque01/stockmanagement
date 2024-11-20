@@ -7,6 +7,7 @@ export interface Supplier {
   totalDue: number;
   totalPaid: number;
   totalBalance: number;
+  timestamp: number;
 }
 
 export interface SuppliersState {
