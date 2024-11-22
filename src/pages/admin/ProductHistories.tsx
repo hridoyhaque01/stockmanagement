@@ -15,6 +15,7 @@ function ProductHistories() {
     productId,
     {
       skip: !productId,
+      refetchOnMountOrArgChange: true,
     }
   );
   const status = isFetchBaseQueryError(error) ? error.status : null;

@@ -73,6 +73,19 @@ const slice = createSlice({
           ? "Extra Payment"
           : "Partial Payment";
     },
+    resetOrderState: (state) => {
+      state.customer = undefined;
+      state.details = {
+        totalQuantity: null,
+        totalPrice: null,
+        totalPaid: null,
+        totalDue: null,
+        type: "Partial Payment",
+      };
+      state.orders = [];
+      state.isNewCustomer = false;
+      state.selectedOrder = undefined;
+    },
     setCustomerAddStatus: (state, action) => {
       state.isNewCustomer = action.payload;
     },
@@ -112,5 +125,6 @@ export const {
   setCustomerSales,
   sortSales,
   sortCustomerSales,
+  resetOrderState,
 } = slice.actions;
 export default slice.reducer;

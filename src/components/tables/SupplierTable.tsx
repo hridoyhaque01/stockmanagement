@@ -143,7 +143,9 @@ function SupplierTable({
                 </TableCell>
                 <TableCell>{item?.supplierEmail || "N/A"}</TableCell>
                 <TableCell>{item?.supplierPhone || "N/A"}</TableCell>
-                <TableCell>{item?.supplierAddress || "N/A"}</TableCell>
+                <TableCell className="truncate max-w-[200px]">
+                  {item?.supplierAddress || "N/A"}
+                </TableCell>
                 <TableCell>৳ {item?.totalPaid}</TableCell>
                 <TableCell>৳ {item?.totalDue}</TableCell>
                 <TableCell>৳ {item?.totalBalance}</TableCell>

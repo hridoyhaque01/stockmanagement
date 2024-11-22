@@ -6,6 +6,8 @@ import {
   SaleAddForm,
   SupplierAddForm,
   SupplierUpdateForm,
+  UserPasswordForm,
+  UserProfileForm,
 } from "../types";
 const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.productId) return { error: "Product not selected" };
@@ -16,6 +18,8 @@ const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.paidAmount) return { error: "Paid Amount is required" };
   if (data.dueAmount !== 0 && !data.dueAmount)
     return { error: "Due Amount is required" };
+  if (data.avaragePrice !== 0 && !data.avaragePrice)
+    return { error: "Avarage Price is required" };
   if (!data?.proccessTime) return { error: "Date is required" };
   return { error: null };
 };
@@ -66,12 +70,27 @@ const saleAddValidation = (data: SaleAddForm) => {
   return { error: null };
 };
 
+const validateUserData = (data: UserProfileForm) => {
+  if (!data?.username) return { error: "Username is required" };
+  return { error: null };
+};
+
+const validateUserPassword = (data: UserPasswordForm) => {
+  if (!data?.currentPassword) return { error: "Current Password is required" };
+  if (!data?.newPassword) return { error: "New Password is required" };
+  if (!data?.confirmPassword) return { error: "Confirm Password is required" };
+  if(data?.newPassword !== data?.confirmPassword) return { error: "Password does not match" };
+  return { error: null };
+};
+
 export {
   addSuppliesValidation,
   customerAddValidation,
+  customerUpdateValidation,
   grainAddValidation,
   saleAddValidation,
   supplierAddValidation,
   supplierUpdateValidation,
-  customerUpdateValidation
+  validateUserData,
+  validateUserPassword
 };

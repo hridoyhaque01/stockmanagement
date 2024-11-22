@@ -6,7 +6,7 @@ import AdminSidebar from "../shared/navigations/AdminSidebar";
 function AdminLayout() {
   useGetActivePath();
   return (
-    <main className="flex h-screen overflow-hidden bg-blue-50/50">
+    <main className="flex h-screen overflow-hidden bg-white-700">
       <div className="h-full flex w-full">
         <AdminSidebar />
         <div className="w-full h-full flex flex-col overflow-x-hidden">

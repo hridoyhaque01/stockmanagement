@@ -2,6 +2,7 @@ import { apiSlice } from "../api/apiSlice";
 import { productApi } from "../products/api";
 import { suppliersApi } from "../suppliers/api";
 import {
+  removeSupply,
   setProductSupplies,
   setSupplierSupplies,
   setSupplies,
@@ -77,6 +78,28 @@ export const suppliesApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    removeSupply: builder.mutation({
+      query: (suppliesId) => ({
+        url: `/supplies/delete/${suppliesId}`,
+        method: "DELETE",
+      }),
+      async onQueryStarted(suppliesId, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            suppliesApi.util.updateQueryData("getSupplies", null, (draft) => {
+              draft.data = [...draft.data]?.filter(
+                (item) => item?.id !== suppliesId
+              );
+            })
+          );
+          dispatch(productApi.endpoints.getProducts.initiate(null)).refetch();
+          dispatch(removeSupply(suppliesId));
+        } catch (error) {
+          console.error("Faild to add supply:", error);
+        }
+      },
+    }),
   }),
 });
 
@@ -85,4 +108,5 @@ export const {
   useAddSupplyMutation,
   useGetSupplierSuppliesQuery,
   useGetProductSuppliesQuery,
+  useRemoveSupplyMutation,
 } = suppliesApi;

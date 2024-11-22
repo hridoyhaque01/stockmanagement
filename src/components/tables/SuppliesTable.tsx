@@ -9,10 +9,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
+import useToastify from "@/hooks/useToastify";
+import { useRemoveSupplyMutation } from "@/store/modules/supplies/api";
 import { sortSupplies } from "@/store/modules/supplies/slice";
+import { Supplies } from "@/store/modules/supplies/types";
 import { ArrowDownUpIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import ConfirmationModal from "../modals/ConfirmationModal";
+import RequestLoader from "../shared/RequestLoader";
 import { TableResponseHandler } from "./TableHandler";
 
 function SuppliesTable({
@@ -26,8 +31,12 @@ function SuppliesTable({
   const { pagination, currentRows, currentPage } = usePagination({
     data: data,
   });
+  const { infoNotify, errorNotify } = useToastify();
+  const [removeSupply, { isLoading: isDeleting }] = useRemoveSupplyMutation();
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [type, setType] = useState("asc");
+  const [supplies, setSupplies] = useState<Supplies | null>(null);
   const toggleSort = () => {
     if (type === "asc") {
       setType("desc");
@@ -37,6 +46,24 @@ function SuppliesTable({
       dispatch(sortSupplies("asc"));
     }
   };
+
+  const selectSupplies = (supplies: Supplies) => {
+    setSupplies(supplies);
+    setOpen(true);
+  };
+
+  const handleDelete = () => {
+    removeSupply(supplies?.id)
+      .unwrap()
+      .then((res) => {
+        infoNotify(res?.message);
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.message);
+      });
+    setOpen(false);
+  };
+
   return (
     <>
       <Table className="">
@@ -99,7 +126,11 @@ function SuppliesTable({
                 <TableCell>৳ {item?.dueAmount}</TableCell>
                 <TableCell className="text-center">
                   <div className="flex items-center justify-center gap-3">
-                    <button type="button" className="text-blue-500">
+                    <button
+                      type="button"
+                      className="text-blue-500"
+                      onClick={() => selectSupplies(item)}
+                    >
                       <TrashIcon className="w-5 h-5 text-red-100" />
                     </button>
                   </div>
@@ -110,6 +141,13 @@ function SuppliesTable({
         </TableBody>
       </Table>
       <div className="py-4">{pagination}</div>
+      <ConfirmationModal
+        handler={handleDelete}
+        open={open}
+        setOpen={setOpen}
+        description="Are you sure you want to delete this product?"
+      />
+      {isDeleting && <RequestLoader />}
     </>
   );
 }

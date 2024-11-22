@@ -11,7 +11,7 @@ import {
 import usePagination from "@/hooks/usePagination";
 import { sortGrains } from "@/store/modules/grains/slice";
 import { Grain } from "@/store/modules/grains/types";
-import { ArrowDownUpIcon, ClipboardList, TrashIcon } from "lucide-react";
+import { ArrowDownUpIcon, ClipboardList } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -101,9 +101,6 @@ function GrainTable({
                       onClick={() => handleHistoryNavigation(item)}
                     >
                       <ClipboardList className="w-5 h-5 " />
-                    </button>
-                    <button type="button" className="text-red-100">
-                      <TrashIcon className="w-5 h-5 " />
                     </button>
                   </div>
                 </TableCell>

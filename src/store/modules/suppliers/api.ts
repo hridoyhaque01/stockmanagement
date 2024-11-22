@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { suppliesApi } from "../supplies/api";
 import {
   setSupplier,
   setSuppliers,
@@ -86,6 +87,7 @@ export const suppliersApi = apiSlice.injectEndpoints({
             supplierId: data?.supplier?.id,
           };
           dispatch(updateSupplierDue(updateData));
+          dispatch(suppliesApi.endpoints.getSupplies.initiate(null)).refetch();
         } catch (error) {
           console.error("Faild to add supplier:", error);
         }
