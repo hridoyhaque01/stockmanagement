@@ -1,10 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../shared/navigations/Navbar";
 
 function Layout() {
+  const { pathname } = useLocation();
+  const isAuthLogin = pathname?.includes("auth");
+  console.log(isAuthLogin);
   return (
     <div>
-      <Navbar />
+      {!isAuthLogin && <Navbar />}
       <Outlet />
     </div>
   );

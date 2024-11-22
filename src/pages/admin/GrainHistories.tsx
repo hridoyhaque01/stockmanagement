@@ -8,8 +8,12 @@ import { GrainHistory } from "@/store/modules/grains/types";
 import { useSelector } from "react-redux";
 
 function GrainHistories() {
-  const { isLoading, isError, error, refetch } =
-    useGetGrainHistoriesQuery(null);
+  const { isLoading, isError, error, refetch } = useGetGrainHistoriesQuery(
+    null,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
   const status = isFetchBaseQueryError(error) ? error.status : null;
   const { grainHistories } = useSelector((state: RootState) => state.grains);
   const { searchValue } = useSelector((state: RootState) => state.common);

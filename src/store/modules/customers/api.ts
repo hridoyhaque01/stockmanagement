@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { salesApi } from "../sales/api";
 import {
   setCustomer,
   setCustomers,
@@ -86,6 +87,7 @@ export const customersApi = apiSlice.injectEndpoints({
             customerId: customer?.customer?.id,
           };
           dispatch(updateCustomerDue(updateData));
+          dispatch(salesApi.endpoints.getSales.initiate(null)).refetch();
         } catch (error) {
           console.error("Faild to add customer:", error);
         }

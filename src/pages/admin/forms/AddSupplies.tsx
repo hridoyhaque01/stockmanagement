@@ -30,6 +30,7 @@ function AddSupplies() {
     const form = event.target as HTMLFormElement;
     const quantity = form.quantity.value;
     const price = Number(form.price.value || 0);
+    const avaragePrice = Number(form.avaragePrice.value || 0);
     const paidAmount = Number(form.paidAmount.value || 0);
     const dueAmount =
       paidAmount > price ? paidAmount - price : price - paidAmount;
@@ -45,6 +46,7 @@ function AddSupplies() {
       price: price,
       paidAmount: paidAmount,
       dueAmount: dueAmount,
+      avaragePrice: avaragePrice,
       type: type,
       productId: product?.id,
       supplierId: supplier?.id,
@@ -66,7 +68,7 @@ function AddSupplies() {
         errorNotify(error?.data?.message, () => handleSubmit(event));
       });
   };
-
+  console.log(product);
   return (
     <div className="p-6">
       <div className="w-full bg-white p-6 rounded-2xl">
@@ -92,6 +94,22 @@ function AddSupplies() {
               required
               readOnly
               defaultValue={product?.productName}
+            />
+            <Input
+              label="Previous Quantity : "
+              placeholder="Previous Quantity"
+              name="productQuantity"
+              required
+              readOnly
+              defaultValue={product?.quantity}
+            />
+            <Input
+              label="Previous Price : "
+              placeholder="Previous Price"
+              name="productName"
+              required
+              readOnly
+              defaultValue={product?.avaragePrice}
             />
             <div className="w-full flex flex-col gap-2">
               <span className="label whitespace-nowrap">Supplier Phone :</span>
@@ -125,6 +143,13 @@ function AddSupplies() {
               label="Paid Amount : "
               placeholder="Enter paid amount"
               name="paidAmount"
+              required
+            />
+
+            <NumberInput
+              label="Avarage Price : "
+              placeholder="Enter avarage price"
+              name="avaragePrice"
               required
             />
           </div>

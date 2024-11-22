@@ -24,6 +24,7 @@ function SupplierSupplies() {
     supplierId,
     {
       skip: !supplierId,
+      refetchOnMountOrArgChange: true,
     }
   );
   const status = isFetchBaseQueryError(error) ? error.status : null;

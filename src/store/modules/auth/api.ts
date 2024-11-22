@@ -40,7 +40,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           if (type != "forgot-password") {
-            dispatch(saveAuthData(data));
+            dispatch(saveAuthData(data?.data));
           }
         } catch (error) {
           console.error("Failed to verify otp:", error);
@@ -53,6 +53,28 @@ export const authApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: "/users/update-profile",
+        method: "PATCH",
+        body: data,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(saveAuthData(data?.data));
+        } catch (error) {
+          console.error("Failed to update:", error);
+        }
+      },
+    }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/users/change-password",
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -62,4 +84,6 @@ export const {
   useUserProfileQuery,
   useResendOtpMutation,
   useVerifyOtpMutation,
+  useChangePasswordMutation,
+  useUpdateProfileMutation,
 } = authApi;

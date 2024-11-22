@@ -4,6 +4,7 @@ import { SaleAddForm } from "@/common/types";
 import ProductAddModal from "@/components/modals/ProductAddModal";
 import GrainCard from "@/components/sales/GrainCard";
 import CustomerSearch from "@/components/shared/CustomerSearch";
+import DatePicker from "@/components/shared/DatePicker";
 import Input from "@/components/shared/Input";
 import NumberInput from "@/components/shared/NumberInput";
 import RequestLoader from "@/components/shared/RequestLoader";
@@ -13,12 +14,14 @@ import { RootState } from "@/store";
 import { Customer } from "@/store/modules/customers/types";
 import { useAddSaleMutation } from "@/store/modules/sales/api";
 import {
+  resetOrderState,
   setCustomerAddStatus,
   setSaleCustomer,
   setSelectedOrder,
   updatePaidAmount,
 } from "@/store/modules/sales/slice";
 import { SaleOrder } from "@/store/modules/sales/types";
+import { getUnixTime } from "date-fns";
 import { MinusIcon, PlusCircleIcon, WheatIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +36,7 @@ function AddSales() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { errorNotify, infoNotify } = useToastify();
+  const [date, setDate] = useState<Date>();
 
   const handleModal = () => {
     setIsModalOpen(true);
@@ -49,17 +53,27 @@ function AddSales() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.target as HTMLFormElement;
+
+    const customerName = isNewCustomer
+      ? form.customerName.value
+      : customer?.customerName;
+    const customerPhone = isNewCustomer
+      ? form.customerPhone.value
+      : customer?.customerName;
+    const proccessTime = getUnixTime(date || new Date());
 
     const data: SaleAddForm = {
       customerId: isNewCustomer ? undefined : customer?.id,
-      customerName: customer?.customerName || "",
-      customerPhone: customer?.customerPhone || "",
+      customerName: customerName || "",
+      customerPhone: customerPhone || "",
       totalQuantity: Number(details?.totalQuantity || 0),
       totalPrice: Number(details?.totalPrice || 0),
       totalPaid: Number(details?.totalPaid || 0),
       totalDue: Number(details?.totalDue || 0),
       type: details?.type || "",
       orders: [...orders],
+      proccessTime: proccessTime,
     };
 
     const { error } = saleAddValidation(data);
@@ -76,6 +90,7 @@ function AddSales() {
       .then((res) => {
         infoNotify(res?.message);
         navigate(adminRoutes.sales.path);
+        dispatch(resetOrderState());
       })
       .catch((error) => {
         errorNotify(error?.data?.message);
@@ -173,7 +188,6 @@ function AddSales() {
                   </div>
                   <Input
                     placeholder="Customer name"
-                    name="customerName"
                     readOnly
                     defaultValue={customer?.customerName}
                   />
@@ -204,6 +218,7 @@ function AddSales() {
                 defaultValue={details?.totalDue?.toString()}
                 readOnly
               />
+              <DatePicker date={date} setDate={setDate} />
             </div>
             <div className="flex items-center justify-end mt-10 gap-4">
               <Button

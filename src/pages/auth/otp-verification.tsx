@@ -102,9 +102,9 @@ function OtpVerification() {
         <div className="w-full sm:max-w-[520px] px-10 h-full flex items-center justify-center flex-wrap relative">
           <Link
             to={authRoutes.forgotPassword.path}
-            className="bg-green-300 w-11 h-11 rounded-full shadow-md flex items-center justify-center absolute top-5 left-5"
+            className="bg-neutral-200 w-11 h-11 rounded-full shadow-md flex items-center justify-center absolute top-5 left-5"
           >
-            <ArrowLeft className="text-white" />
+            <ArrowLeft />
           </Link>
           <div className="w-full">
             <img

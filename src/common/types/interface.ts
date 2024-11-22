@@ -29,6 +29,7 @@ export interface AddSuppliesForm {
   quantity: number;
   price: number;
   paidAmount: number;
+  avaragePrice: number;
   dueAmount: number;
   productId?: string | undefined;
   supplierId?: string | undefined;
@@ -192,7 +193,20 @@ export interface SaleAddForm {
   totalPaid: number;
   totalDue: number;
   type: string;
+  proccessTime: number;
   orders: SaleOrder[];
+}
+
+export interface UserProfileForm {
+  username?: string;
+  phone?: string;
+  address?: string;
+}
+
+export interface UserPasswordForm {
+  currentPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
 }
 
 type UsePaginationProps<T> = {

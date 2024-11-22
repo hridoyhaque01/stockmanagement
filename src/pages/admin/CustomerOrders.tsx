@@ -24,6 +24,7 @@ function CustomerOrders() {
     customerId,
     {
       skip: !customerId,
+      refetchOnMountOrArgChange: true,
     }
   );
   const status = isFetchBaseQueryError(error) ? error.status : null;
