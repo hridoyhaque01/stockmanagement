@@ -21,6 +21,12 @@ const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
     },
   });
 
+export function isFetchBaseQueryError(
+  error: unknown
+): error is FetchBaseQueryError {
+  return typeof error === "object" && error !== null && "status" in error;
+}
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: async (args, api, extraOptions) => {

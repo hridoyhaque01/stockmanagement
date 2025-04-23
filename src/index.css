@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
+@layer components {
+  .label {
+    @apply text-sm text-black-600 font-medium;
+  }
+
+  .input {
+    @apply px-3 py-3.5 bg-white w-full text-sm placeholder:text-black-400 text-black-900 border border-neutral-300 outline-none rounded-lg read-only:cursor-default focus:outline-none focus:border-neutral-300 focus:shadow-none focus:ring-0 focus:ring-transparent disabled:bg-neutral-100 disabled:text-black-600 read-only:text-black-600 read-only:bg-neutral-100;
+  }
+
+  .input-none {
+    @apply p-0 bg-transparent w-full text-sm placeholder:text-black-400 text-black-900 border-none outline-none rounded-none read-only:cursor-default focus:outline-none focus:border-none focus:shadow-none focus:ring-0 focus:ring-transparent;
+  }
+}
+
+@layer utilities {
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}

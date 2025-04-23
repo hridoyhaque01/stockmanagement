@@ -1,7 +1,7 @@
+import { AuthState } from "@/store/modules/auth/types";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { ChildrenProps } from "../common/types";
-import { AuthState } from "../store/modules/auth/types";
 
 function PrivateRouter({ children }: ChildrenProps) {
   const { auth }: AuthState = useSelector(
