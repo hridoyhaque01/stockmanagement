@@ -94,7 +94,11 @@ function CustomersTable({
                 <ArrowDownUpIcon className="w-5 h-5" />
               </button>
             </TableHead>
+<<<<<<< HEAD
             <TableHead className="w-[150px] text-white truncate truncate">
+=======
+            <TableHead className="w-[150px] text-white truncate">
+>>>>>>> 5543df6 (fix tables and add some api's)
               Customer Name
             </TableHead>
             <TableHead className="text-white truncate truncate">

@@ -24,7 +24,10 @@ function SupplierSupplies() {
     supplierId,
     {
       skip: !supplierId,
+<<<<<<< HEAD
       refetchOnMountOrArgChange: true,
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
     }
   );
   const status = isFetchBaseQueryError(error) ? error.status : null;
