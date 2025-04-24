@@ -27,12 +27,21 @@ function PageNavigate({
         >
           <MoveLeft className="w-5 h-5" />
           <span>
+<<<<<<< HEAD
             {title} <span className="text-green">({quantity || 0})</span>
+=======
+            {title}{" "}
+            {quantity && <span className="text-green">({quantity})</span>}
+>>>>>>> 5543df6 (fix tables and add some api's)
           </span>
         </Link>
       ) : (
         <h4 className="text-sm sm:text-base md:text-lg font-medium text-black-700">
+<<<<<<< HEAD
           {title} <span className="text-green">({quantity || 0})</span>
+=======
+          {title} {quantity && <span className="text-green">({quantity})</span>}
+>>>>>>> 5543df6 (fix tables and add some api's)
         </h4>
       )}
       <div className="w-full sm:max-w-max flex items-center gap-2 justify-between">

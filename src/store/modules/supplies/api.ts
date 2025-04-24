@@ -2,7 +2,10 @@ import { apiSlice } from "../api/apiSlice";
 import { productApi } from "../products/api";
 import { suppliersApi } from "../suppliers/api";
 import {
+<<<<<<< HEAD
   removeSupply,
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
   setProductSupplies,
   setSupplierSupplies,
   setSupplies,
@@ -108,5 +111,8 @@ export const {
   useAddSupplyMutation,
   useGetSupplierSuppliesQuery,
   useGetProductSuppliesQuery,
+<<<<<<< HEAD
   useRemoveSupplyMutation,
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
 } = suppliesApi;

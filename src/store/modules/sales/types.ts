@@ -38,6 +38,26 @@ export interface Sale {
   customer: Customer;
   timestamp: number;
   proccessTime: number;
+<<<<<<< HEAD
+}
+
+export interface SaleOrder {
+  grainId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  sellingPrice: number;
+  category: Category;
+}
+
+export interface SaleDetails {
+  totalQuantity: number | null;
+  totalPrice: number | null;
+  totalPaid: number | null;
+  totalDue: number | null;
+  type: string | null;
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
 }
 
 export interface SaleOrder {

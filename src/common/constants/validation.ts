@@ -6,8 +6,11 @@ import {
   SaleAddForm,
   SupplierAddForm,
   SupplierUpdateForm,
+<<<<<<< HEAD
   UserPasswordForm,
   UserProfileForm,
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
 } from "../types";
 const addSuppliesValidation = (data: AddSuppliesForm) => {
   if (!data.productId) return { error: "Product not selected" };
@@ -91,6 +94,10 @@ export {
   saleAddValidation,
   supplierAddValidation,
   supplierUpdateValidation,
+<<<<<<< HEAD
   validateUserData,
   validateUserPassword
+=======
+  customerUpdateValidation
+>>>>>>> 5543df6 (fix tables and add some api's)
 };

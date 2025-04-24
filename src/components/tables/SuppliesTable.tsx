@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import usePagination from "@/hooks/usePagination";
+<<<<<<< HEAD
 import useToastify from "@/hooks/useToastify";
 import { useRemoveSupplyMutation } from "@/store/modules/supplies/api";
 import { sortSupplies } from "@/store/modules/supplies/slice";
@@ -18,6 +19,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ConfirmationModal from "../modals/ConfirmationModal";
 import RequestLoader from "../shared/RequestLoader";
+=======
+import { sortSupplies } from "@/store/modules/supplies/slice";
+import { ArrowDownUpIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+>>>>>>> 5543df6 (fix tables and add some api's)
 import { TableResponseHandler } from "./TableHandler";
 
 function SuppliesTable({
@@ -31,12 +38,17 @@ function SuppliesTable({
   const { pagination, currentRows, currentPage } = usePagination({
     data: data,
   });
+<<<<<<< HEAD
   const { infoNotify, errorNotify } = useToastify();
   const [removeSupply, { isLoading: isDeleting }] = useRemoveSupplyMutation();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [type, setType] = useState("asc");
   const [supplies, setSupplies] = useState<Supplies | null>(null);
+=======
+  const dispatch = useDispatch();
+  const [type, setType] = useState("asc");
+>>>>>>> 5543df6 (fix tables and add some api's)
   const toggleSort = () => {
     if (type === "asc") {
       setType("desc");
@@ -46,6 +58,7 @@ function SuppliesTable({
       dispatch(sortSupplies("asc"));
     }
   };
+<<<<<<< HEAD
 
   const selectSupplies = (supplies: Supplies) => {
     setSupplies(supplies);
@@ -64,6 +77,8 @@ function SuppliesTable({
     setOpen(false);
   };
 
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
   return (
     <>
       <Table className="">

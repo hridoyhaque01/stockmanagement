@@ -11,7 +11,11 @@ import {
 import usePagination from "@/hooks/usePagination";
 import { sortGrains } from "@/store/modules/grains/slice";
 import { Grain } from "@/store/modules/grains/types";
+<<<<<<< HEAD
 import { ArrowDownUpIcon, ClipboardList } from "lucide-react";
+=======
+import { ArrowDownUpIcon, ClipboardList, TrashIcon } from "lucide-react";
+>>>>>>> 5543df6 (fix tables and add some api's)
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -55,13 +59,17 @@ function GrainTable({
                 <ArrowDownUpIcon className="w-5 h-5" />
               </button>
             </TableHead>
+<<<<<<< HEAD
+            <TableHead className="w-[150px] text-white  truncate  truncate">
+=======
             <TableHead className="w-[150px] text-white  truncate">
+>>>>>>> 5543df6 (fix tables and add some api's)
               Product Id
             </TableHead>
-            <TableHead className="text-white  truncate">Product Name</TableHead>
-            <TableHead className="text-white  truncate">Quantity</TableHead>
-            <TableHead className="text-white  truncate">Price</TableHead>
-            <TableHead className="text-center text-white  truncate">
+            <TableHead className="text-white  truncate  truncate">Product Name</TableHead>
+            <TableHead className="text-white  truncate  truncate">Quantity</TableHead>
+            <TableHead className="text-white  truncate  truncate">Price</TableHead>
+            <TableHead className="text-center text-white  truncate  truncate">
               Action
             </TableHead>
           </TableRow>
