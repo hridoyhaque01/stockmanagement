@@ -143,9 +143,13 @@ function SupplierTable({
                 </TableCell>
                 <TableCell>{item?.supplierEmail || "N/A"}</TableCell>
                 <TableCell>{item?.supplierPhone || "N/A"}</TableCell>
+<<<<<<< HEAD
                 <TableCell className="truncate max-w-[200px]">
                   {item?.supplierAddress || "N/A"}
                 </TableCell>
+=======
+                <TableCell>{item?.supplierAddress || "N/A"}</TableCell>
+>>>>>>> 5543df6 (fix tables and add some api's)
                 <TableCell>৳ {item?.totalPaid}</TableCell>
                 <TableCell>৳ {item?.totalDue}</TableCell>
                 <TableCell>৳ {item?.totalBalance}</TableCell>

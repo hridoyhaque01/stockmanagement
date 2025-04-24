@@ -38,6 +38,7 @@ export interface Sale {
   customer: Customer;
   timestamp: number;
   proccessTime: number;
+<<<<<<< HEAD
 }
 
 export interface SaleOrder {
@@ -55,6 +56,8 @@ export interface SaleDetails {
   totalPaid: number | null;
   totalDue: number | null;
   type: string | null;
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
 }
 
 export interface SaleOrder {

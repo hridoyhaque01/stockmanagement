@@ -125,6 +125,9 @@ export const {
   setCustomerSales,
   sortSales,
   sortCustomerSales,
+<<<<<<< HEAD
   resetOrderState,
+=======
+>>>>>>> 5543df6 (fix tables and add some api's)
 } = slice.actions;
 export default slice.reducer;

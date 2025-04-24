@@ -65,7 +65,11 @@ function SupplierSuppliesTable({
             isError={isError}
             refetch={refetch}
             isFound={isFound}
+<<<<<<< HEAD
             column={8}
+=======
+            column={9}
+>>>>>>> 5543df6 (fix tables and add some api's)
             isNotFound={isNotFound}
           >
             {currentRows?.map((item, index) => (
